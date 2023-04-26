@@ -35,15 +35,100 @@ $apellidosUsuario = $_SESSION['apellidoUsuario'];
           <center><h2>Uruapan</h1></center>
           <canvas id="graficaUruapan"></canvas>
         </div>
+        <center>
+          <div class="col-lg-4">
+          <center><h2>Generos</h1></center>
+          <canvas id="graficaGenero"></canvas>
+        </div>
+        </center>
       </div>
+
+      <?php
+        require_once("../db_functions/db_global.php");
+        require_once("../db_functions/db_graficas_movimientos.php");
+
+        $dbConnect = comenzarConexion();
+
+        $solicitudMorelia     = mostrarSolicitudesMorelia($dbConnect);
+        $audienciaMorelia     = mostrarAudienciasMorelia($dbConnect);
+        $ratificacionMorelia  = mostrarRatificacionesMorelia($dbConnect);
+
+        $solicitudUruapan     = mostrarSolicitudesUruapan($dbConnect);
+        $audienciaUruapan     = mostrarAudienciasUruapan($dbConnect);
+        $ratificacionUruapan  = mostrarRatificacionesUruapan($dbConnect);
+
+        $solicitudZamora      = mostrarSolicitudesZamora($dbConnect);
+        $audienciaZamora      = mostrarAudienciasZamora($dbConnect);
+        $ratificacionZamora   = mostrarRatificacionesZamora($dbConnect);
+
+        $hombres              = mostrarGeneroHombres($dbConnect);
+        $mujeres              = mostrarGeneroMujeres($dbConnect);
+
+        // MORELIA =================================================================
+        for($i = 0; $i < count($solicitudMorelia); $i++){
+          $totalSolicitudMorelia = $solicitudMorelia[$i]["totalSolicitud"];
+        }
+
+        for($i = 0; $i < count($audienciaMorelia); $i++){
+          $totalAudienciaMorelia = $audienciaMorelia[$i]["totalAudiencia"];
+        }
+
+        for($i = 0; $i < count($ratificacionMorelia); $i++){
+          $totalRatificacionMorelia = $ratificacionMorelia[$i]["totalRatificacion"];
+        }
+        // =========================================================================
+
+        // URUAPAN =================================================================
+        for($i = 0; $i < count($solicitudUruapan); $i++){
+          $totalSolicitudUruapan = $solicitudUruapan[$i]["totalSolicitud"];
+        }
+
+        for($i = 0; $i < count($audienciaUruapan); $i++){
+          $totalAudienciaUruapan = $audienciaUruapan[$i]["totalAudiencia"];
+        }
+
+        for($i = 0; $i < count($ratificacionUruapan); $i++){
+          $totalRatificacionUruapan = $ratificacionUruapan[$i]["totalRatificacion"];
+        }
+        // =========================================================================
+
+        // ZAMORA ==================================================================
+        for($i = 0; $i < count($solicitudZamora); $i++){
+          $totalSolicitudZamora = $solicitudZamora[$i]["totalSolicitud"];
+        }
+
+        for($i = 0; $i < count($audienciaZamora); $i++){
+          $totalAudienciaZamora = $audienciaZamora[$i]["totalAudiencia"];
+        }
+
+        for($i = 0; $i < count($ratificacionZamora); $i++){
+          $totalRatificacionZamora = $ratificacionZamora[$i]["totalRatificacion"];
+        }
+        // =========================================================================
+
+        // GENERO ==================================================================
+        for($i = 0; $i < count($hombres); $i++){
+          $totalHombres = $hombres[$i]["totalHombres"];
+        }
+
+        for($i = 0; $i < count($mujeres); $i++){
+          $totalMujeres = $mujeres[$i]["totalMujeres"];
+        }
+        // =========================================================================
+
+        cerrarConexion($dbConnect);
+        
+      ?>
       
 
       <script>
+
         const ctxMorelia = document.getElementById('graficaMorelia');
         const ctxZamora = document.getElementById('graficaZamora');
         const ctxUruapan = document.getElementById('graficaUruapan');
+        const ctxGenero = document.getElementById('graficaGenero');
 
-
+        // MORELIA =================================================================
         new Chart(ctxMorelia, {
           type: 'bar',
           data: {
@@ -51,20 +136,20 @@ $apellidosUsuario = $_SESSION['apellidoUsuario'];
             datasets: [
               {
                 label: 'Solicitudes',
-                data: [120],
+                data: [<?=$totalSolicitudMorelia?>],
                 backgroundColor: ['#d3a929'],
                 borderWidth: 5
               },
               {
-                label: 'Ratificaciones',
-                data: [150],
-                backgroundColor: ['#476162'],
+                label: 'Audiencias',
+                data: [<?=$totalAudienciaMorelia?>],
+                backgroundColor: ['#809798'],
                 borderWidth: 5
               },
               {
-                label: 'Audiencias',
-                data: [110],
-                backgroundColor: ['#809798'],
+                label: 'Ratificaciones',
+                data: [<?=$totalRatificacionMorelia?>],
+                backgroundColor: ['#476162'],
                 borderWidth: 5
               }
             ]
@@ -77,9 +162,9 @@ $apellidosUsuario = $_SESSION['apellidoUsuario'];
             }
           }
         });
+        // =========================================================================
 
-
-        
+        // ZAMORA ==================================================================
         new Chart(ctxZamora, {
           type: 'bar',
           data: {
@@ -87,20 +172,20 @@ $apellidosUsuario = $_SESSION['apellidoUsuario'];
             datasets: [
               {
                 label: 'Solicitudes',
-                data: [120],
+                data: [<?=$totalSolicitudZamora?>],
                 backgroundColor: ['#6f1c46'],
                 borderWidth: 5
               },
               {
-                label: 'Ratificaciones',
-                data: [150],
-                backgroundColor: ['#f9c3d0'],
+                label: 'Audiencias',
+                data: [<?=$totalAudienciaZamora?>],
+                backgroundColor: ['#512d36'],
                 borderWidth: 5
               },
               {
-                label: 'Audiencias',
-                data: [110],
-                backgroundColor: ['#512d36'],
+                label: 'Ratificaciones',
+                data: [<?=$totalRatificacionZamora?>],
+                backgroundColor: ['#f9c3d0'],
                 borderWidth: 5
               }
             ]
@@ -113,10 +198,9 @@ $apellidosUsuario = $_SESSION['apellidoUsuario'];
             }
           }
         });
+        // =========================================================================
 
-
-        
-
+        // URUAPAN =================================================================
         new Chart(ctxUruapan, {
           type: 'bar',
           data: {
@@ -124,20 +208,20 @@ $apellidosUsuario = $_SESSION['apellidoUsuario'];
             datasets: [
               {
                 label: 'Solicitudes',
-                data: [120],
+                data: [<?=$totalSolicitudUruapan?>],
                 backgroundColor: ['#686667'],
                 borderWidth: 5
               },
               {
-                label: 'Ratificaciones',
-                data: [150],
-                backgroundColor: ['#808798'],
+                label: 'Audiencias',
+                data: [<?=$totalAudienciaUruapan?>],
+                backgroundColor: ['#d3a929'],
                 borderWidth: 5
               },
               {
-                label: 'Audiencias',
-                data: [110],
-                backgroundColor: ['#d3a929'],
+                label: 'Ratificaciones',
+                data: [<?=$totalRatificacionUruapan?>],
+                backgroundColor: ['#808798'],
                 borderWidth: 5
               }
             ]
@@ -150,6 +234,37 @@ $apellidosUsuario = $_SESSION['apellidoUsuario'];
             }
           }
         });
+        // =========================================================================
+
+        // GENEROS =================================================================
+        new Chart(ctxGenero, {
+          type: 'bar',
+          data: {
+            labels: [''],
+            datasets: [
+              {
+                label: 'Hombres',
+                data: [<?=$totalHombres?>],
+                backgroundColor: ['#686667'],
+                borderWidth: 5
+              },
+              {
+                label: 'Mujeres',
+                data: [<?=$totalMujeres?>],
+                backgroundColor: ['#6f1c46'],
+                borderWidth: 5
+              }
+            ]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+        // =========================================================================
       </script>
 <?php
 require_once("../global/footer.php");
