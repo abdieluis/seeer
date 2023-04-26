@@ -40,4 +40,15 @@ function obtenerDatosUsuarioSolicitanteSeleccionado($dbConnect, $campo, $valor){
   return $fila;
 }
 
+function obtenerDatosSolicitanteEditar($dbConnect, $campo, $valor){
+  $fila = array();
+  $query = 'SELECT * FROM usuario_solicitante WHERE '.$campo.' = ?';
+  $stmt = $dbConnect->prepare($query);
+  $stmt->bind_param('s', $valor);
+  $stmt->execute();
+  $resultado = $stmt->get_result();
+  $fila = $resultado->fetch_assoc();
+  return $fila;
+}
+
 ?>

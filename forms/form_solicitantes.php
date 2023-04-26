@@ -50,7 +50,7 @@ $idUsuario   = $_SESSION['idUsuario'];
                     echo'<td class="resultados"><i class="bx bxs-x-circle"></i>Eliminado</td>';
                   }
                   
-                  echo '<td class="resultados"> <div class="operacionesTd"> <a href="#" onclick="abrirPopupRegistroMovimientoSolicitante('.$datos[$i]["idUsuarioSolicitante"].')"><i class="bx bxs-cog"></i></a> </div> </td>
+                  echo '<td class="resultados"> <div class="operacionesTd"> <a href="#" onclick="abrirPopupRegistroMovimientoSolicitante('.$datos[$i]["idUsuarioSolicitante"].')"><i class="bx bxs-cog"></i></a> <a href="#" onclick="abrirPopupEditarSolicitante('.$datos[$i]["idUsuarioSolicitante"].')"><i class="bx bx-pencil"></i></a> </div> </td>
                 </tr>'; 
             }
             cerrarConexion($dbConnect);
