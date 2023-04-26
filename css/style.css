@@ -1,0 +1,291 @@
+:root{
+	--colorTitulosModal: #000;
+	--titulosModal: 20px;
+
+	--imgTitulosModalError: url("../images/cancelar.png");
+	--imgTitulosModalExito: url("../images/comprobado.png");
+	--imgTitulosModalAdvertencia: url("../images/crisis.png");
+}
+
+/*OVERLAY=====================================================================================*/
+  .messageOverlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow: hidden;
+    position: fixed; 
+    top: 0;
+    transition: 0.5s;
+    width: 0;
+    z-index: 1050;
+  }
+
+  .messageOverlayContent {
+    margin-top: 30px; 
+    position: relative;
+    text-align: center; 
+    top: 25%; 
+    width: 100%; 
+  }
+
+  .titleMessageOverlay {
+    color: #FFF;
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin: 0px;
+    padding: 10px;
+    text-transform: uppercase;
+  }
+
+  .texMessageOverlay {
+    color: #FFF;
+    font-size: 12px;
+    margin: 0px;
+    margin-bottom: 10px;
+    padding: 0px;
+  }
+
+  .messageOverlayContent .sending { text-shadow: 0px 0px 16px #1545A6; }
+/*============================================================================================*/
+
+nav.navegacion {
+  background-color: #fff !important;
+}
+
+nav.navegacion .divMenu ul li:hover{
+  background-color: #512d36;
+  border-radius: 10px;
+}
+
+nav.navegacion .divMenu ul li a:hover{
+  color: #d3a929;
+}
+
+nav.navegacion .divMenu .navCerrarSesion li:hover {
+  background-color: #512d36;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+nav.navegacion .divMenu .navCerrarSesion li a:hover {
+  color: #d3a929;
+}
+
+
+/*CUERPO PRINCIPAL============================================================================*/
+  .cuerpoPrincipal {
+    max-height: calc(100vh - 100px);
+    overflow: auto;
+    padding: 20px 20px;
+    position: static;
+    scrollbar-color: #809798 #476162;
+    top: 80px;
+    width: calc(100% - 10px);
+  }
+
+  .cuerpoPrincipal::-webkit-scrollbar {
+    width: 12px;
+    background: transparent;
+  }
+
+  .cuerpoPrincipal::-webkit-scrollbar-track {
+    background: #809798;
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
+  }
+
+  .cuerpoPrincipal::-webkit-scrollbar-thumb {
+    background: #476162;
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
+  }
+
+  .cuerpoPrincipal::-webkit-scrollbar-corner { display: none; }
+/*============================================================================================*/
+
+.imgInicio img{
+  width: 100%;
+  height: 100%;
+}
+
+.btnAltaSolicitante button{
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  background: #512D36;
+  border: 1px solid #F9C3D0;
+  color: #fff;
+  font-size: 17px;
+  padding: 5px;
+}
+
+.btnAltaSolicitante button:hover {
+  background: #F9C3D0;
+  border: 1px solid #512D36;
+  color: #000;
+}
+
+.btnAlta button{
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  background: #512D36;
+  border: 1px solid #F9C3D0;
+  color: #fff;
+  font-size: 17px;
+  padding: 5px;
+}
+
+.btnAlta button:hover {
+  background: #F9C3D0;
+  border: 1px solid #512D36;
+  color: #000;
+}
+
+table thead tr th.encabezados {
+  text-align: center;
+}
+
+table tbody tr td.resultados {
+  text-align: center;
+}
+
+table tbody tr td.resultados .operacionesTd a.opcTd{
+  padding-right: 10%;
+}
+
+table tbody tr td.resultados .operacionesTd a{
+  color: #512D36;
+}
+
+table tbody tr td.resultados .operacionesTd a:hover{
+  color: #F9C3D0;
+}
+
+/*.modal .modal-body .formsMovimientos{
+  padding: 10px;
+}*/
+
+
+/*CUERPO MODAL =============================================================================*/
+  .modal-body {
+    max-height: calc(80vh - 100px);
+    overflow: auto;
+    padding: 20px 20px;
+    position: static;
+    scrollbar-color: #809798 #476162;
+/*    top: 80px;*/
+    width: calc(100% - 10px);
+  }
+
+  .modal-body::-webkit-scrollbar {
+    width: 12px;
+    background: transparent;
+  }
+
+  .modal-body::-webkit-scrollbar-track {
+    background: #809798;
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
+  }
+
+  .modal-body::-webkit-scrollbar-thumb {
+    background: #476162;
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
+  }
+
+  .modal-body::-webkit-scrollbar-corner { display: none; }
+
+/*============================================================================================*/
+
+.modal .modal-header{
+	background-color: #fff;
+}
+
+.modal .modal-header h1{
+	font-size: var(--titulosModal);
+	color: var(--colorTitulosModal);
+	padding: 0px 1px;
+}
+
+.modal .modal-header .error,
+.modal .modal-header .exito,
+.modal .modal-header .advertencia {
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 35px;
+  padding-left: 50px;
+}
+
+.modal .modal-header .error { background-image: var(--imgTitulosModalError); }
+.modal .modal-header .exito { background-image: var(--imgTitulosModalExito); }
+.modal .modal-header .advertencia { background-image: var(--imgTitulosModalAdvertencia); }
+
+.modal-body .textoMensaje{
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.modal-body .iconoMensaje{
+	text-align: center;
+}
+
+.modal-footer {
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+.modal-footer button {
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 10px;
+}
+
+.modal-footer button.popupBtn { width: 100%; }
+
+.modal-footer button.popupBtn{
+  background-color: #000;
+  color: #fff;
+}
+
+.modal-footer button.popupBtn:hover{
+  background-color: #6f1c46;
+}
+
+.modal-footer button.popupBtnContinuar,
+.modal-footer button.popupBtnCancelar { width: 48%; }
+
+.modal-footer button.popupBtnCancelar{
+  background-color: #000;
+  color: #fff;
+}
+
+.modal-footer button.popupBtnCancelar:hover{
+  background-color: #6f1c46;
+}
+
+.modal-footer button.popupBtnContinuar{
+  background-color: #d3a929;
+  color: #fff;
+}
+
+.modal-footer button.popupBtnContinuar:hover{
+  background-color: #476162;
+}
+
+@media (max-width: 780px) {
+  .modal-footer button.popupBtnContinuar,
+  .modal-footer button.popupBtnCancelar { width: 47%; }
+
+  /*.imgInicio img{
+    width: 250px;
+    height: 400px;
+  }*/
+}
