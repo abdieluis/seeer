@@ -51,4 +51,11 @@ function obtenerDatosSolicitanteEditar($dbConnect, $campo, $valor){
   return $fila;
 }
 
+function actualizarDatosUsuarioSolicitante($dbConnect, $nombres, $apellidos, $genero, $edad, $nroIdentificacion, $telefono, $estado, $municipio, $ciudad, $idUsuarioSolicitante){
+  $query = 'UPDATE usuario_solicitante SET nombres = ?, apellidos = ?, genero = ?, edad = ?, nroIdentificacionOficial = ?, telefono = ?, estado = ?, municipio = ?, idCiudad = ? WHERE idUsuarioSolicitante = ?';
+  $stmt = $dbConnect->prepare($query);
+  $stmt->bind_param('ssssssssii', $nombres, $apellidos, $genero, $edad, $nroIdentificacion, $telefono, $estado, $municipio, $ciudad, $idUsuarioSolicitante);
+  return array($stmt->execute());
+}
+
 ?>

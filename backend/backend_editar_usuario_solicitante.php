@@ -18,22 +18,23 @@ if(!isset($backendIncluido)){
 // ===================================================================================================
 
 // DATOS PEDIDOS POR POST
-$idSolicitud              = $_POST['idSolicitud'];
-$nombreSolicitante        = $_POST['nombreSolicitante'];
-$apellidosSolicitante     = $_POST['apellidosSolicitante'];
-$auxiliarAsignado         = $_POST['auxiliarAsignado'];
-$generoSolicitante        = $_POST['generoSolicitante'];
-$nroIdentificacionOficial = $_POST['nroIdentificacionOficial'];
-$edadSolicitante          = $_POST['edadSolicitante'];
-$motivoSolicitud          = $_POST['motivoSolicitud'];
-$observaciones            = $_POST['observaciones'];
+$idUsuarioSolicitante = $_POST['idUsuarioSolicitante'];
+$nombres              = ucwords($_POST['nombres']);
+$apellidos            = ucwords($_POST['apellidos']);
+$genero               = $_POST['genero'];
+$edad                 = $_POST['edad'];
+$nroIdentificacion    = $_POST['nroIdentificacion'];
+$telefono             = $_POST['telefono'];
+$estado               = $_POST['estado'];
+$municipio            = $_POST['municipio'];
+$ciudad               = $_POST['ciudad'];
+
+// print_r($_POST);
 
 
-$resultadoUsuarioSolicitanteActualizar  = actualizarDatosUsuarioSolicitante($dbConnect, $idSolicitud, $nombreSolicitante, $apellidosSolicitante, $auxiliarAsignado, $generoSolicitante, $nroIdentificacionOficial, $edadSolicitante, $motivoSolicitud, $observaciones);
+$resultadoUsuarioSolicitanteActualizar  = actualizarDatosUsuarioSolicitante($dbConnect, $nombres, $apellidos, $genero, $edad, $nroIdentificacion, $telefono, $estado, $municipio, $ciudad, $idUsuarioSolicitante);
 
 $arrayResultados            = unirArrays($arrayResultados, $resultadoUsuarioSolicitanteActualizar);
-
-
 
 if(!isset($backendIncluido)){
     $ejecutarDb   = true;

@@ -15,7 +15,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="popupBtnCancelar btnCancelarSolicitante" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="popupBtnContinuar" onclick="altaUsuarioSolicitante();">Continuar</button>
+        <button type="button" class="popupBtnContinuar" onclick="actualizarUsuarioSolicitante();">Continuar</button>
       </div>
     </div>
   </div>
@@ -56,6 +56,9 @@
 
           $("#estadoSolicitanteActualizacion option:contains("+estadoEditar+")").attr('selected', true);
 
+          idEstadoSeleccionadoEditar = $("#estadoSolicitanteActualizacion").val();
+          mostrarMunicipiosEditar(idEstadoSeleccionadoEditar);
+
           closeMessageOverlay();
         }
       }
@@ -64,20 +67,16 @@
   // ============================================================================
 
   // FUNCION SELECT MUNICIPIOS ==================================================
-  function mostrarMunicipiosEditar(){
-
-    var idEstadoSeleccionado = $("#estadoSolicitanteActualizacion option:selected").val();
-
-    console.log(idEstadoSeleccionado);
+  function mostrarMunicipiosEditar(idEstadoSeleccionadoEditar){
 
     var jsonData = {
-      "estado": idEstadoSeleccionado
+      "estado": idEstadoSeleccionadoEditar
     }
 
     showMessageOverlay("CARGANDO...", "../images/cargando.gif", "200", "200", "sending");
     $.ajax({
         method:"POST",
-        url:"../backend/backend_mostrar_municipios.php",
+        url:"../backend/backend_mostrar_municipios_estado.php",
         data:jsonData,
         success:function(data){
           var respuesta = JSON.parse(data);
@@ -105,7 +104,105 @@
 
             $(".selectMunicipios").html(opcionesMunicipios);
 
-            // $("#municipioSolicitanteActualizacion option:contains("+municipioEditar+")").attr('selected', true);
+            $("#municipioSolicitanteActualizacion option:contains("+municipioEditar+")").attr('selected', true);
+
+
+            idCiudadSeleccionadoEditar = $("#municipioSolicitanteActualizacion option:selected").attr("centro");
+            
+            seleccionarCiudadEditarSolicitante(idCiudadSeleccionadoEditar);
+
+            closeMessageOverlay();
+          }
+      }
+    });
+  }
+  // ============================================================================
+
+  // FUNCION SELECT CIUDAD DE EDITAR SOLICITANTE ==================================
+  function seleccionarCiudadEditarSolicitante(idCiudadSeleccionadoEditar){
+
+    showMessageOverlay("CARGANDO...", "../images/cargando.gif", "200", "200", "sending");
+    $.ajax({
+      method:"POST",
+      url:"../backend/backend_mostrar_ciudades.php",
+      data:"",
+      success:function(data){
+        var respuesta = JSON.parse(data);
+
+        if(respuesta["codigo"] == "fallo"){
+          $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+          $(".textoMensaje").text(respuesta["mensaje"]);
+          $("#msj").modal("toggle");
+          closeMessageOverlay();
+        }
+        else if(respuesta["codigo"] == "exito"){
+          var resultados = respuesta["objetoRespuesta"]["ciudad"];
+          // console.log(resultados);
+
+          var opcionesCiudad = "<option value='-1'>Municipio de Registro</option>";
+
+          for (i = 0; i < resultados.length; i++) {
+            var resultadosTotales = resultados[i];
+            var idCiudad = resultadosTotales["idCiudad"];
+            var ciudad   = resultadosTotales["ciudad"];
+
+            opcionesCiudad += "<option value='"+idCiudad+"'>"+ciudad+"</option>";
+          }
+          
+          var htmlSelectCiudad =
+          "<label class='input-group-text' for='ciudadSolicitanteActualizacion'><i class='bx bx-map'></i></label>"+
+          "<select class='form-select' id='ciudadSolicitanteActualizacion'>"+opcionesCiudad+"</select>";
+          $(".opcionesCiudad").html(htmlSelectCiudad);
+
+          $("#ciudadSolicitanteActualizacion option[value='"+idCiudadSeleccionadoEditar+"'").attr("selected",true);
+
+          closeMessageOverlay();
+                
+        }
+      }
+    });
+  }
+  // ============================================================================
+
+  // FUNCION SELECT MUNICIPIOS ==================================================
+  function mostrarMunicipiosEstadosEditar(){
+
+    var idEstadoSeleccionado = $("#estadoSolicitanteActualizacion option:selected").val();
+
+    var jsonData = {
+      "estado": idEstadoSeleccionado
+    }
+
+    showMessageOverlay("CARGANDO...", "../images/cargando.gif", "200", "200", "sending");
+    $.ajax({
+        method:"POST",
+        url:"../backend/backend_mostrar_municipios_estado.php",
+        data:jsonData,
+        success:function(data){
+          var respuesta = JSON.parse(data);
+
+          if(respuesta["codigo"] == "fallo"){
+            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+            $(".textoMensaje").text(respuesta["mensaje"]);
+            $("#msj").modal("toggle");
+            closeMessageOverlay();
+          }
+          else if(respuesta["codigo"] == "exito"){
+            var resultados = respuesta["objetoRespuesta"]["municipios"];
+
+            var opcionesMunicipios = "<option value='-1'>Municipio de Solicitante</option>";
+
+            for (i = 0; i < resultados.length; i++) {
+                var resultadosTotales = resultados[i];
+                // console.log(resultadosTotales);
+                var idMunicipio     = resultadosTotales["id"];
+                var nombreMunicipio = resultadosTotales["nombre"];
+                var ciudadCentro    = resultadosTotales["ciudadCentro"];
+
+                opcionesMunicipios += "<option value='"+idMunicipio+"' centro='"+ciudadCentro+"'>"+nombreMunicipio+"</option>";
+            }
+
+            $(".selectMunicipios").html(opcionesMunicipios);
 
             closeMessageOverlay();
           }
@@ -152,7 +249,7 @@
           "<select class='form-select' id='ciudadSolicitanteActualizacion'>"+opcionesCiudad+"</select>";
           $(".opcionesCiudad").html(htmlSelectCiudad);
 
-          // $("#ciudadSolicitanteActualizacion option[value='"+ciudadAltaCentro+"'").attr("selected",true);
+          $("#ciudadSolicitanteActualizacion option[value='"+ciudadAltaCentro+"'").attr("selected",true);
 
           closeMessageOverlay();
                 
@@ -165,9 +262,10 @@
   // FUNCION ABRIR POPUP ========================================================
   function abrirPopupEditarSolicitante(idUsuarioSolicitante){
 
+    idUsuarioSolicitanteEditar = idUsuarioSolicitante;
 
     var jsonData = {
-      "idUsuarioSolicitante": idUsuarioSolicitante
+      "idUsuarioSolicitante": idUsuarioSolicitanteEditar
     }
 
     showMessageOverlay("CARGANDO...", "../images/cargando.gif", "200", "200", "sending");
@@ -247,7 +345,7 @@
           "<div class='col-md-6'>"+
             "<div class='input-group mb-3'>"+
               "<span class='input-group-text' id='basic-addon1'><i class='bx bx-map'></i></span>"+
-              "<select class='form-select selectEstadosActualizar' id='estadoSolicitanteActualizacion' onchange='mostrarMunicipiosEditar();'></select>"+
+              "<select class='form-select selectEstadosActualizar' id='estadoSolicitanteActualizacion' onchange='mostrarMunicipiosEstadosEditar();'></select>"+
             "</div>"+
           "</div>"+
           "<div class='col-md-6 ms-auto'>"+
@@ -267,8 +365,6 @@
 
           $("#generoSolicitanteActualizacion option[value='"+genero+"'").attr("selected",true);
 
-          // $("#ciudadSolicitanteActualizacion option[value='"+idCiudad+"'").attr("selected",true);
-
           closeMessageOverlay();
                 
         }
@@ -276,32 +372,27 @@
     });
 
     mostrarEstadosEditar();
-    // mostrarMunicipiosEditar();
-    // mostrarCiudadEditarSolicitante();
-
-    // $("#estadoSolicitanteActualizacion option:contains("+estadoEditar+")").attr('selected', true);
-    // $("#municipioSolicitanteActualizacion option:contains("+municipioEditar+")").attr('selected', true);
-    // $("#ciudadSolicitanteActualizacion option[value='"+idCiudadEditar+"'").attr("selected",true);
+    
 
     $("#editarSolicitante").modal("toggle");
   }
   // ============================================================================
 
-  // FUNCION DAR DE ALTA USUARIO SOLICITANTE ====================================
-  function altaUsuarioSolicitante(){
+  // FUNCION ACTUALIZAR USUARIO SOLICITANTE =====================================
+  function actualizarUsuarioSolicitante(){
 
-    var nombreUsuarioSolicitante     = $("#nombresSolicitanteAlta").val();
-    var apellidosUsuarioSolicitante  = $("#apellidosSolicitanteAlta").val();
-    var generoSolicitante            = $("#generoSolicitanteAlta").val();
-    var edadSolicitante              = $("#edadSolicitanteAlta").val();
-    var nroIdentificacionSolicitante = $("#nroIdentificacionSolicitanteAlta").val();
-    var telefonoSolicitante          = $("#telefonoSolicitanteAlta").val();
-    var estadoSolicitante            = $("#estadoSolicitanteAlta option:selected").text();
-    var municipioSolicitante         = $("#municipioSolicitanteAlta option:selected").text();
-    var ciudadSolicitante            = $("#ciudadSolicitanteAlta").val();
+    var nombreUsuarioSolicitante     = $("#nombresSolicitanteActualizacion").val();
+    var apellidosUsuarioSolicitante  = $("#apellidosSolicitanteActualizacion").val();
+    var generoSolicitante            = $("#generoSolicitanteActualizacion").val();
+    var edadSolicitante              = $("#edadSolicitanteActualizacion").val();
+    var nroIdentificacionSolicitante = $("#nroIdentificacionSolicitanteActualizacion").val();
+    var telefonoSolicitante          = $("#telefonoSolicitanteActualizacion").val();
+    var estadoSolicitante            = $("#estadoSolicitanteActualizacion option:selected").text();
+    var municipioSolicitante         = $("#municipioSolicitanteActualizacion option:selected").text();
+    var ciudadSolicitante            = $("#ciudadSolicitanteActualizacion").val();
 
-    var idEstadoSolicitante          = $("#estadoSolicitanteAlta option:selected").val();
-    var idMunicipioSolicitante       = $("#municipioSolicitanteAlta option:selected").val();
+    var idEstadoSolicitante          = $("#estadoSolicitanteActualizacion option:selected").val();
+    var idMunicipioSolicitante       = $("#municipioSolicitanteActualizacion option:selected").val();
 
     if (nombreUsuarioSolicitante == "") {
       $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
@@ -367,6 +458,7 @@
     }
 
     var json_data = {
+      "idUsuarioSolicitante": idUsuarioSolicitanteEditar,
       "nombres": nombreUsuarioSolicitante,
       "apellidos": apellidosUsuarioSolicitante,
       "genero": generoSolicitante,
@@ -378,10 +470,12 @@
       "ciudad": ciudadSolicitante
     }
 
+    console.log(json_data);
+
     showMessageOverlay("CARGANDO...", "../images/cargando.gif", "200", "200", "sending");
     $.ajax({
       method:"POST",
-      url:"../backend/backend_registrar_usuario_solicitante.php",
+      url:"../backend/backend_editar_usuario_solicitante.php",
       data:json_data,
       success:function(data){
         var respuesta = JSON.parse(data);
@@ -399,7 +493,7 @@
           $(".btnCancelarSolicitante").click();
           $(".iconoMensaje").html("<i class='bx bx-check-circle bx-tada bx-lg' style='color:#0ea202' ></i>");
           $(".textoMensaje").text(respuesta["mensaje"]);
-          $("#msj").modal("toggle");
+          $("#msjRec").modal("toggle");
           closeMessageOverlay();
         }
       }
@@ -409,9 +503,12 @@
 
   // EVENTO READY ===============================================================
   $(document).ready(function () {
+    idUsuarioSolicitanteEditar = "";
     estadoEditar = "";
     idCiudadEditar = "";
     municipioEditar = "";
+    idEstadoSeleccionadoEditar = "";
+    idCiudadSeleccionadoEditar = "";
   });
   // ============================================================================
 </script>

@@ -148,7 +148,7 @@ function mostrarGeneroHombres($dbConnect){
 
 function mostrarGeneroMujeres($dbConnect){
     $respuesta = array();
-    $query = 'SELECT COUNT(genero) AS totalMujeres FROM usuario_solicitante WHERE genero = "Mujeres"';
+    $query = 'SELECT COUNT(genero) AS totalMujeres FROM usuario_solicitante WHERE genero = "Mujer"';
     $stmt = $dbConnect->prepare($query);
     $stmt->execute();
     $resultado = $stmt->get_result();
