@@ -27,8 +27,8 @@ function obtenerDatosSolicitudSolicitante($dbConnect, $campo, $valor){
   $resultado = $stmt->get_result();
   while ($fila = $resultado->fetch_assoc()) {
       array_push($respuesta, $fila);
-   }
-   return $respuesta;
+  }
+  return $respuesta;
 }
 
 function obtenerDatosSolicitudSeleccionada($dbConnect, $campo, $valor){

@@ -146,7 +146,7 @@
     showMessageOverlay("CARGANDO...", "../images/cargando.gif", "200", "200", "sending");
     $.ajax({
         method:"POST",
-        url:"../backend/backend_mostrar_municipios.php",
+        url:"../backend/backend_mostrar_municipios_estado.php",
         data:jsonData,
         success:function(data){
           var respuesta = JSON.parse(data);
@@ -351,7 +351,7 @@
           $(".btnCancelarSolicitante").click();
           $(".iconoMensaje").html("<i class='bx bx-check-circle bx-tada bx-lg' style='color:#0ea202' ></i>");
           $(".textoMensaje").text(respuesta["mensaje"]);
-          $("#msj").modal("toggle");
+          $("#msjRec").modal("toggle");
           closeMessageOverlay();
         }
       }

@@ -35,4 +35,29 @@ function mostrarDatosAudiencias($dbConnect){
     return $respuesta;
 }
 
+function obtenerDatosAudienciaSeleccionada($dbConnect, $campo, $valor){
+    $fila = array();
+    $query = 'SELECT * FROM audiencia WHERE '.$campo.' = ?';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('s', $valor);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $fila = $resultado->fetch_assoc();
+    return $fila;
+}
+
+function actualizarDatosAudiencia($dbConnect, $nombreSolicitante, $apellidosSolicitante, $conciliadorAsignado, $fechaSolicitud, $fechaAudiencia, $horarioAudiencia, $nombreCitado, $observaciones, $idAudiencia){
+    $query = 'UPDATE audiencia SET nombreSolicitante = ?, apellidosSolicitante = ?, conciliadorAsignado = ?, fechaSolicitud = ?, fechaAudiencia = ?, horarioAudiencia = ?, nombreCitado = ?, observaciones = ? WHERE idAudiencia = ?';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('ssssssssi', $nombreSolicitante, $apellidosSolicitante, $conciliadorAsignado, $fechaSolicitud, $fechaAudiencia, $horarioAudiencia, $nombreCitado, $observaciones, $idAudiencia);
+    return array($stmt->execute());
+}
+
+function eliminarAudiencia($dbConnect, $estatus, $idAudiencia){
+    $query = 'UPDATE audiencia SET eliminado = ? WHERE idAudiencia = ?';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('ii', $estatus, $idAudiencia);
+    return array($stmt->execute());
+}
+
 ?>
