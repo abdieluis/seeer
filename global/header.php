@@ -158,7 +158,7 @@ $tipoUsuario = $_SESSION['idTipoUsuario'];
           <div class="d-lg-flex col-lg-3 justify-content-lg-end navCerrarSesion">
             <li class="nav-item" style="list-style: none;">
               <!-- <a class="nav-link menu" href="../"><img src="../images/cerrarsesion.png" style="width: 5%"> | Cerrar Sesion</a> -->
-              <a class="nav-link menu" href="../"><i class='bx bx-exit'></i> Cerrar Sesion</a>
+              <a class="nav-link menu" href="#" onclick="abrirPopupConfirmarEliminacion();"><i class='bx bx-exit'></i> Cerrar Sesion</a>
             </li>
           </div>
         </div>

@@ -23,6 +23,8 @@
 <script>
   // FUNCION ABRIR POPUP ========================================================
   function abrirPopupEditarDatosSolicitud(idSolicitud){
+
+    idSolicitudEditar = idSolicitud;
     
     var json_data = {
       "idSolicitud": idSolicitudEditar
@@ -35,8 +37,10 @@
       data:json_data,
       success:function(data){
         var respuesta = JSON.parse(data);
+        console.log(respuesta);
 
         if(respuesta["codigo"] == "fallo"){
+          $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
           $(".textoMensaje").text(respuesta["mensaje"]);
           $("#msj").modal("toggle");
           closeMessageOverlay();
@@ -44,18 +48,20 @@
         else if(respuesta["codigo"] == "exito"){
           var resultados = respuesta["objetoRespuesta"]["solicitudSeleccionada"];
 
-          var apellidosSolicitante     = resultados["apellidosSolicitante"];
-          var auxiliarAsignado         = resultados["auxiliarAsignado"];
-          var edad                     = resultados["edad"];
-          var eliminado                = resultados["eliminado"];
-          var fecha                    = resultados["fecha"];
-          var generoSolicitante        = resultados["generoSolicitante"];
-          var idSolicitud              = resultados["idSolicitud"];
-          var idUsuarioSolicitante     = resultados["idUsuarioSolicitante"];
-          var motivoSolicitud          = resultados["motivoSolicitud"];
-          var nombreSolicitante        = resultados["nombreSolicitante"];
-          var nroIdentificacionOficial = resultados["nroIdentificacionOficial"];
-          var observaciones            = resultados["observaciones"];
+          // console.log(resultados);
+
+          var apellidosSolicitante      = resultados["apellidosSolicitante"];
+          var auxiliarAsignado          = resultados["auxiliarAsignado"];
+          var edad                      = resultados["edad"];
+          var eliminado                 = resultados["eliminado"];
+          var fecha                     = resultados["fecha"];
+          var generoSolicitante         = resultados["generoSolicitante"];
+          var idSolicitud               = resultados["idSolicitud"];
+          var idUsuarioSolicitante      = resultados["idUsuarioSolicitante"];
+          var motivoSolicitud           = resultados["motivoSolicitud"];
+          var nombreSolicitante         = resultados["nombreSolicitante"];
+          var nroIdentificacionOficial  = resultados["nroIdentificacionOficial"];
+          var observaciones             = resultados["observaciones"];
 
           var htmlFormularioSolicitudes =
           "<div class='col-md-6'>"+

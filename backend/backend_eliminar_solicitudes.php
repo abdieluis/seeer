@@ -28,14 +28,14 @@ $eliminado = $resultadoMostrarDatosSolicitud['eliminado'];
 
 if ($eliminado == 0) {
     $eliminado = 1;
-    $mensaje      = "Usuario eliminado correctamente.";
+    $mensaje      = "Solicitud eliminado correctamente.";
 }else{
     $eliminado = 0;
-    $mensaje      = "Usuario activado correctamente.";
+    $mensaje      = "Solicitud activado correctamente.";
 } 
 
-$resultadoEliminarUsuario = eliminarSolicitud($dbConnect, $eliminado, $idSolicitud);
-$arrayResultados          = unirArrays($arrayResultados,$resultadoEliminarUsuario);
+$resultadoEliminarSolicitud = eliminarSolicitud($dbConnect, $eliminado, $idSolicitud);
+$arrayResultados          = unirArrays($arrayResultados,$resultadoEliminarSolicitud);
 
 if(!isset($backendIncluido)){
     $ejecutarDb   = true;
@@ -44,7 +44,7 @@ if(!isset($backendIncluido)){
     // $mensaje      = "Usuario eliminado correctamente.";
 }else {
     $codigo = "fallo";
-    $mensaje = "Usuario no se elimino";
+    $mensaje = "Solicitud no se elimino";
     $objetoRespuesta = array();
 }
 
