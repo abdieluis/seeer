@@ -64,13 +64,16 @@
           var observaciones             = resultados["observaciones"];
 
           var htmlFormularioSolicitudes =
+
           "<div class='col-md-6'>"+
+          "<label for='nombresSolicitanteActualizarMovimiento' class='form-label'>Nombres</label>"+
             "<div class='input-group mb-3'>"+
               "<span class='input-group-text' id='basic-addon1'><i class='bx bxs-edit-alt'></i></span>"+
               "<input type='text' class='form-control' aria-describedby='basic-addon1' name='nombresSolicitanteActualizarMovimiento' id='nombresSolicitanteActualizarMovimiento' value='"+nombreSolicitante+"'>"+
             "</div>"+
           "</div>"+
           "<div class='col-md-6 ms-auto'>"+
+          "<label for='apellidosSolicitanteActualizarMovimiento' class='form-label'>Apellidos</label>"+
             "<div class='input-group mb-3'>"+
               "<span class='input-group-text' id='basic-addon1'><i class='bx bxs-edit-alt'></i></span>"+
               "<input type='text' class='form-control' aria-describedby='basic-addon1' name='apellidosSolicitanteActualizarMovimiento' id='apellidosSolicitanteActualizarMovimiento' value='"+apellidosSolicitante+"'>"+
@@ -78,12 +81,14 @@
           "</div>"+
 
           "<div class='col-md-6'>"+
+          "<label for='auxiliarAsignadoActualizarMovimiento' class='form-label'>Auxiliar asignado</label>"+
             "<div class='input-group mb-3'>"+
               "<span class='input-group-text' id='basic-addon1'><i class='bx bxs-user-check'></i></span>"+
               "<input type='text' class='form-control' placeholder='Auxiliar Asignado' aria-label='Auxiliar Asignado' aria-describedby='basic-addon1' name='auxiliarAsignadoActualizarMovimiento' id='auxiliarAsignadoActualizarMovimiento' value='"+auxiliarAsignado+"'>"+
             "</div>"+
           "</div>"+
           "<div class='col-md-6 ms-auto'>"+
+          "<label for='generoSolicitanteActualizarMovimiento' class='form-label'>Genero</label>"+
             "<div class='input-group mb-3'>"+
               "<label class='input-group-text' for='generoSolicitanteActualizarMovimiento'><i class='bx bx-male-female'></i></label>"+
               "<select class='form-select' id='generoSolicitanteActualizarMovimiento'>"+
@@ -95,12 +100,14 @@
           "</div>"+
 
           "<div class='col-md-6'>"+
+          "<label for='nroIdentificacionSolicitanteActualizarMovimiento' class='form-label'>Nro de Identificación</label>"+
             "<div class='input-group mb-3'>"+
               "<span class='input-group-text' id='basic-addon1'><i class='bx bx-id-card'></i></span>"+
               "<input type='text' class='form-control' aria-describedby='basic-addon1' name='nroIdentificacionSolicitanteActualizarMovimiento' id='nroIdentificacionSolicitanteActualizarMovimiento' value='"+nroIdentificacionOficial+"'>"+
             "</div>"+
           "</div>"+
           "<div class='col-md-6 ms-auto'>"+
+          "<label for='edadSolicitanteActualizarMovimiento' class='form-label'>Edad</label>"+
             "<div class='input-group mb-3'>"+
               "<span class='input-group-text' id='basic-addon1'><i class='bx bx-user-circle'></i></span>"+
               "<input type='text' class='form-control' aria-describedby='basic-addon1' name='edadSolicitanteActualizarMovimiento' id='edadSolicitanteActualizarMovimiento' maxlength='3' onKeypress='return soloNumeros(event);' value='"+edad+"'>"+
@@ -108,6 +115,7 @@
           "</div>"+
 
           "<div class='col-md-12'>"+
+          "<label for='motivoSolicitudActualizarMovimiento' class='form-label'>Motivo</label>"+
             "<div class='input-group mb-3'>"+
               "<span class='input-group-text' id='basic-addon1'><i class='bx bx-message-rounded-error'></i></span>"+
               "<input type='text' class='form-control' placeholder='Motivo Solicitud' aria-label='Motivo Solicitud' aria-describedby='basic-addon1' name='motivoSolicitudActualizarMovimiento' id='motivoSolicitudActualizarMovimiento' value='"+motivoSolicitud+"'>"+
@@ -115,6 +123,7 @@
           "</div>"+
 
           "<div class='col-md-12'>"+
+          "<label for='observacionesActualizarMovimiento' class='form-label'>Observaciones</label>"+
             "<div class='input-group mb-3'>"+
               "<span class='input-group-text' id='basic-addon1'><i class='bx bx-message-rounded-detail'></i></span>"+
               "<textarea class='form-control' name='observacionesActualizarMovimiento' id='observacionesActualizarMovimiento' placeholder='Observaciones' aria-label='Observaciones' rows='4'>"+observaciones+"</textarea>"+

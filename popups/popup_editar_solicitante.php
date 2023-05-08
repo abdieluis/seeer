@@ -54,10 +54,10 @@
 
           $(".selectEstadosActualizar").html(opcionesEstados);
 
-          $("#estadoSolicitanteActualizacion option:contains("+estadoEditar+")").attr('selected', true);
+          // $("#estadoSolicitanteActualizacion option:contains("+estadoEditar+")").attr('selected', true);
 
-          idEstadoSeleccionadoEditar = $("#estadoSolicitanteActualizacion").val();
-          mostrarMunicipiosEditar(idEstadoSeleccionadoEditar);
+          // idEstadoSeleccionadoEditar = $("#estadoSolicitanteActualizacion").val();
+          // mostrarMunicipiosEditar(idEstadoSeleccionadoEditar);
 
           closeMessageOverlay();
         }
@@ -345,7 +345,9 @@
           "<div class='col-md-6'>"+
             "<div class='input-group mb-3'>"+
               "<span class='input-group-text' id='basic-addon1'><i class='bx bx-map'></i></span>"+
-              "<select class='form-select selectEstadosActualizar' id='estadoSolicitanteActualizacion' onchange='mostrarMunicipiosEstadosEditar();'></select>"+
+              "<select class='form-select selectEstadosActualizar' id='estadoSolicitanteActualizacion' onchange='mostrarMunicipiosEstadosEditar();'>"+
+                "<option value='-1'>Selecciona Estado Solicitante</option>"+
+              "</select>"+
             "</div>"+
           "</div>"+
           "<div class='col-md-6 ms-auto'>"+

@@ -1,13 +1,20 @@
 <?php
 require_once("../global/library.php");
 
+$title       = "CCL - SEEER";
+$needSession = true;
+$home        = true;
+
 $tipoUsuario = $_SESSION['idTipoUsuario'];
 
 ?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title> </title>
+    <title><?=$title?></title>
+
+    <link rel="icon" href="images/ser.png">
+
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="author" content="CCLMichoacan">

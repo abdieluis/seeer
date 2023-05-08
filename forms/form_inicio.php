@@ -1,5 +1,6 @@
 <?php
 require_once("../global/header.php");
+
 $tipoUsuario = $_SESSION['idTipoUsuario'];
 $nombresUsuario = $_SESSION['nombreUsuario'];
 $apellidosUsuario = $_SESSION['apellidoUsuario'];

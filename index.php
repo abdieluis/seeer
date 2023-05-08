@@ -1,5 +1,5 @@
 <?php
-$title       = "Login";
+$title       = "LOGIN | SEEER";
 $needSession = false;
 $home        = true;
 
@@ -9,6 +9,9 @@ require_once("popups/popup_message_overlay.php");
 <!DOCTYPE html>
 <html>
 <head>
+	<title><?=$title?></title>
+
+	<link rel="icon" href="images/ser.png">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -33,7 +36,6 @@ require_once("popups/popup_message_overlay.php");
 
 	<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 
-	<title></title>
 </head>
 <body>
 	<div class="page">
