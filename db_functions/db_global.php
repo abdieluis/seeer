@@ -1,19 +1,15 @@
 <?php
-function comenzarConexion($db = 0){
+function comenzarConexion(){
   ini_set('mssql.charset', 'utf-8');
   ini_set('memory_limit', '1024M');
   date_default_timezone_set('America/Mexico_City');
 
-  if($db == 0){
+  $settings = parse_ini_file("../settings.ini");
 
-    $DBName = "seer";
-
-  }else{
-    $DBName = $db;
-  }
-  $DBServer =  "localhost";
-  $DBUser   =  "root";
-  $DBPass   =  "";
+  $DBName   = $settings['DBName'];
+  $DBServer =  $settings['DBServer'];
+  $DBUser   =  $settings['DBUser'];
+  $DBPass   =  $settings['DBPass'];
 
 
   $dbConnect = new mysqli($DBServer, $DBUser, $DBPass, $DBName);
@@ -29,10 +25,7 @@ function comenzarConexion($db = 0){
   return $dbConnect;
 }
 
-
 function cerrarConexion($dbConnect){
   mysqli_close($dbConnect);
 }
-
-
 ?>

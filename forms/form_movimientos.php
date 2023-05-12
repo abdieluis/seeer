@@ -1,4 +1,7 @@
 <?php
+$title       = "MOVIMIENTOS | SEEER CONCILIADOR";
+$needSession = true;
+$home        = false;
 require_once("../global/header.php");
 $tipoUsuario = $_SESSION['idTipoUsuario'];
 $idUsuario   = $_SESSION['idUsuario'];

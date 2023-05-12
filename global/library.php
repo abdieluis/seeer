@@ -8,8 +8,6 @@ date_default_timezone_set('America/Mexico_City');
 
 $sessionActivada = session_status() == PHP_SESSION_ACTIVE ? TRUE : FALSE;
 
-echo($sessionActivada);
-
 if($sessionActivada === FALSE){
   session_start();
 }
@@ -24,7 +22,7 @@ if(isset($_SESSION['activa'])){
   if(isset($home)){
 
     if($home){
-      header("Location: ../");
+      header("Location: ../forms");
       exit();
     }
 

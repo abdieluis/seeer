@@ -1,8 +1,8 @@
-/*@import url('https://rsms.me/inter/inter-ui.css');*/
-@font-face {
+/* @import url('https://rsms.me/inter/inter-ui.css'); */
+/* @font-face {
     font-family: 'Kalam';
     src: url('../fonts/kalam/Kalam-Bold.ttf');
-}
+} */
 
 ::selection {
   background: #2D2F36;
@@ -15,8 +15,8 @@
 }
 body {
   background: white;
-/*  font-family: 'Inter UI', sans-serif;*/
-  font-family: 'Kalam', Kalam-Bold;
+ /* font-family: 'Inter UI', sans-serif; */
+  /* font-family: 'Kalam', Kalam-Bold; */
   margin: 0;
   padding: 20px;
 }

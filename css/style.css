@@ -68,10 +68,14 @@ nav.navegacion .divMenu .navCerrarSesion li:hover {
   padding: 8px;
 }
 
-nav.navegacion .divMenu .navCerrarSesion li a:hover {
-  color: #d3a929;
+nav.navegacion .divMenu .navCerrarSesion li a button {
+  border-radius: 10px;
 }
 
+nav.navegacion .divMenu ul li:hover{
+  background-color: #512d36;
+  border-radius: 10px;
+}
 
 /*CUERPO PRINCIPAL============================================================================*/
   .cuerpoPrincipal {

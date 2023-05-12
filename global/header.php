@@ -1,12 +1,11 @@
 <?php
-require_once("../global/library.php");
-
-$title       = "CCL - SEEER";
-$needSession = true;
-$home        = true;
-
+require_once("global/library.php");
 $tipoUsuario = $_SESSION['idTipoUsuario'];
 
+require_once("popups/popup_cerrar_sesion.php");
+
+  $title          = 'CCLMichoacán';
+  
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,19 +24,19 @@ $tipoUsuario = $_SESSION['idTipoUsuario'];
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache" />
 
-    <!-- <link rel="stylesheet" href="../css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="../css/bootstrap.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <!-- <script type="text/javascript" src="../js/bootstrap.js"></script> -->
-    <!-- <script type="text/javascript" src="../js/bootstrap.min.js"></script> -->
+    <!-- <script type="text/javascript" src="js/bootstrap.js"></script> -->
+    <!-- <script type="text/javascript" src="js/bootstrap.min.js"></script> -->
 
-    <script src="../js/jquery-3.6.0.min.js"></script>
-    <script src="../js/jquery-ui.js"></script>
-    <script src="../js/message_overlay.js"></script>
-    <script src="../js/utilidades.js"></script>
-    <script src="../js/validaciones.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/message_overlay.js"></script>
+    <script src="js/utilidades.js"></script>
+    <script src="js/validaciones.js"></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 
     <!-- Se adjuntan los CDNS para la tabla paginada de resultados -->
@@ -52,8 +51,8 @@ $tipoUsuario = $_SESSION['idTipoUsuario'];
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> -->
+  <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <script src="assets/dist/js/bootstrap.bundle.min.js"></script> -->
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -130,7 +129,7 @@ $tipoUsuario = $_SESSION['idTipoUsuario'];
 
     
     <!-- Custom styles for this template -->
-    <!-- <link href="../css/navbars.css" rel="stylesheet"> -->
+    <!-- <link href="css/navbars.css" rel="stylesheet"> -->
   </head>
   <body>
     
@@ -142,38 +141,36 @@ $tipoUsuario = $_SESSION['idTipoUsuario'];
         </button>
 
         <div class="collapse navbar-collapse d-lg-flex divMenu" id="menuSer">
-          <a class="navbar-brand col-lg-3 me-0" href="../forms/form_inicio.php"><img src="../images/ccl.png" style="width: 15%"></a>
+          <a class="navbar-brand col-lg-3 me-0" href="./"><img src="images/ccl.png" style="width: 15%"></a>
           <ul class="navbar-nav col-lg-6 justify-content-lg-center">
             <li class="nav-item">
-              <a class="nav-link menu" aria-current="page" href="../forms/form_inicio.php">Inicio</a>
+              <a class="nav-link menu" aria-current="page" href="forms/form_inicio.php">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link menu" href="../forms/form_solicitantes.php">Buscar Solicitante</a>
+              <a class="nav-link menu" href="forms/form_solicitantes.php">Buscar Solicitante</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link menu" href="../forms/form_movimientos.php">Movimientos</a>
+              <a class="nav-link menu" href="forms/form_movimientos.php">Movimientos</a>
             </li>
-            <?php if ($tipoUsuario == 1) { ?>
             <li class="nav-item dropdown">
               <a class="nav-link menu dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Administrador</a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Usuarios</a></li>
               </ul>
             </li>
-            <?php } ?>
           </ul>
           <div class="d-lg-flex col-lg-3 justify-content-lg-end navCerrarSesion">
             <li class="nav-item" style="list-style: none;">
-              <!-- <a class="nav-link menu" href="../"><img src="../images/cerrarsesion.png" style="width: 5%"> | Cerrar Sesion</a> -->
-              <a class="nav-link menu" href="#" onclick="abrirPopupConfirmarEliminacion();"><i class='bx bx-exit'></i> Cerrar Sesion</a>
+              <a class="nav-link menu" href="#" onclick="abrirPopupCerrarSesion();"><i class="bx bx-exit"></i> Cerrar Sesion</a>
             </li>
           </div>
         </div>
       </div>
     </nav>
 
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <div class="cuerpoPrincipal">
-      
     
+   

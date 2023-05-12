@@ -23,7 +23,7 @@
 </div>
 <script>
   // FUNCION ABRIR POPUP ========================================================
-  function abrirPopupConfirmarEliminacion(){
+  function abrirPopupCerrarSesion(){
 
     $("#msjCerrarSesion").modal("toggle");
   }

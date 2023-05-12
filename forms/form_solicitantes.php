@@ -1,4 +1,8 @@
 <?php
+$title       = "SOLICITANTES | SEEER CONCILIADOR";
+$needSession = true;
+$home        = false;
+
 require_once("../global/header.php");
 $tipoUsuario = $_SESSION['idTipoUsuario'];
 $idUsuario   = $_SESSION['idUsuario'];
