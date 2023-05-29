@@ -46,7 +46,7 @@ if(!isset($backendIncluido)){
 
 //******************************************************************************************************
 if(!isset($backendIncluido))
-  cerrarConexion($dbConnect);
+cerrarConexion($dbConnect);
 //******************************************************************************************************
 //******************************************************************************************************
 echo json_encode(constructorRespuesta($codigo, $mensaje, $objetoRespuesta), JSON_ERROR_UTF8);

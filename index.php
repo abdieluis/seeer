@@ -1,6 +1,5 @@
 <?php
-    $title       = "SEEER CONCILIADOR";
-    require_once("popups/popup_alta_ratificacion_usuario.php");
+    $title = "SEEER | RATIFICACIÓN";
 ?>
 
 <!DOCTYPE html>
@@ -130,9 +129,31 @@
         </button>
 
         <div class="collapse navbar-collapse d-lg-flex divMenu" id="menuSer">
-            <a class="navbar-brand col-lg-3 me-0" href="./"><img src="images/ccl.png" style="width: 15%"></a>
+            <a class="navbar-brand col-lg-3 me-0" href="./"><img src="images/ccl.png" style="width: 18%; padding: 3%"></a>
             <ul class="navbar-nav col-lg-6 justify-content-lg-center">
-                <!-- <li class="nav-item"><a class="nav-link menu" href="login.php">SOY CCL</a></li> -->
+                <h3>CENTRO DE CONCILIACIÓN LABORAL DEL ESTADO DE MICHOACÁN</h3>
+                <!-- <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel"> -->
+                <!-- <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <h1>SOMOS</h1>
+                        </div>
+                        <div class="carousel-item">
+                            <h1>CCL</h1>
+                        </div>
+                        <div class="carousel-item">
+                            <h1>MICHOACÁN</h1>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div> -->
             </ul>
         </div>
         </div>
@@ -141,10 +162,9 @@
     <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
 
     <div class="cuerpoPrincipal">
-
         <div class="row">
             <div class="col-sm-4 mb-3 mb-sm-0">
-                <div class="card" style="padding: 15px; background-color: #f9c3d0;">
+                <div class="card divInfo">
                     <img src="images/rati.jpg" class="card-img-top" alt="CCLMorelia">
                     <div class="card-body">
                         <h5 class="card-title">Ratificaciones</h5>
@@ -155,7 +175,7 @@
             </div>
             
             <div class="col-sm-4 mb-3 mb-sm-0">
-                <div class="card" style="padding: 15px; background-color: #f9c3d0;">
+                <div class="card divInfo">
                     <img src="images/CCLMichoacan.png" class="card-img-top" alt="CCLUruapan">
                     <div class="card-body">
                         <h5 class="card-title">Centro de Conciliación Laboral del Estado de Michoacán</h5>
@@ -166,7 +186,7 @@
             </div>
             
             <div class="col-sm-4 mb-3 mb-sm-0">
-                <div class="card" style="padding: 15px; background-color: #f9c3d0;">
+                <div class="card divInfo">
                     <img src="images/ratificacion.jpg" class="card-img-top" alt="CCLZamora">
                     <div class="card-body">
                         <h5 class="card-title">Celebrar las ratificaciones.</h5>
@@ -180,12 +200,13 @@
         <div class="card" style="background-color: #809798;">
             <center>
                 <br>
-                <img src="images/ser.png" class="card-img-top" style="width: 15%">
-                <div class="card-body">
+                <img src="images/calendario.png" class="card-img-top" style="width: 10%">
+                <div class="card-body btnAltaSolicitante">
                     <h5 class="card-title">GENERAR UNA CITA PARA LAS RATIFICACIONES</h5>
                     <p class="card-text">PARA AGENDAR UNA RATIFICACIÓN FAVOR DE DAR CLICK AL BOTÓN Y LLENAR LOS DATOS DEL FORMULARIO.</p>
                     <!-- <button type="button" class="" onclick="abrirPopupGenerarRatificacionUsuario();"><i class='bx bxs-user-plus'></i>Generar Ratificación</button> -->
-                    <a href="#" class="btn btn-primary" onclick="abrirPopupGenerarRatificacionUsuario();">GENERAR RATIFICACIÓN</a>
+                    <!-- <a href="#" class="btn btn-primary" onclick="abrirPopupGenerarRatificacionUsuario();">GENERAR RATIFICACIÓN</a> -->
+                    <button type="button" class="btn-lg px-4 me-md-2 fw-bold" onclick="abrirPopupGenerarRatificacionUsuario();"><i class='bx bxs-file-plus'></i> GENERAR RATIFICAIÓN</button>
                 </div>
             </center>
             
@@ -193,13 +214,14 @@
         <br>
         <div class="row g-0 bg-body-secondary position-relative">
             <div class="col-md-3 mb-md-0 p-md-4">
-                <img src="images/ccl.png" class="w-50" style="width: 15%">
+                <img src="images/ser.png" class="w-50" style="width: 50%">
             </div>
-            <div class="col-md-9 p-4 ps-md-0">
+            <div class="col-md-9 p-4 ps-md-0 btnAltaSolicitante">
                 <h5 class="mt-0">SI ERES CCL MICHOACÁN INICIA SESIÓN EN EL BOTÓN.</h5>
                 <p>LAS RATIFICACIONES GENERADAS EN EL CENTRO SON PARA CELEBRARLAS EL MISMO DÍA, INICIA SESIÓN PARA PODER REGISTRAR LOS DATOS.</p>
                 <!-- <button type="button" class="" onclick="abrirPopupGenerarRatificacionUsuario();"><i class='bx bxs-user-plus'></i>Generar Ratificación</button> -->
-                <a href="login.php" class="btn btn-primary">INICIAR SESIÓN</a>
+                <!-- <a href="login.php" class="btn btn-primary">INICIAR SESIÓN</a> -->
+                <button type="button" class="btn-lg px-4 me-md-2 fw-bold" onclick="iniciarSesion();"><i class='bx bx-log-in'></i> INICIAR SESIÓN</button>
             </div>
         </div>
         <div class="my-5">
@@ -312,3 +334,15 @@
     </div>
 </body>
 </html>
+<script>
+    function iniciarSesion(){
+        window.location = ("login.php");
+    }
+</script>
+<?php
+    require_once("popups/popup_alta_ratificacion_usuario.php");
+    require_once("popups/popup_mensaje.php");
+    require_once("popups/popup_message_overlay.php");
+
+    // phpinfo();
+?>

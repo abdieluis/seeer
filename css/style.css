@@ -72,9 +72,8 @@ nav.navegacion .divMenu .navCerrarSesion li a button {
   border-radius: 10px;
 }
 
-nav.navegacion .divMenu ul li:hover{
-  background-color: #512d36;
-  border-radius: 10px;
+nav.navegacion .divMenu li a:hover{
+  color: #d3a929;
 }
 
 /*CUERPO PRINCIPAL============================================================================*/
@@ -106,6 +105,13 @@ nav.navegacion .divMenu ul li:hover{
   }
 
   .cuerpoPrincipal::-webkit-scrollbar-corner { display: none; }
+
+  .cuerpoPrincipal .divInfo {
+    padding: 15px; 
+    background-color: #686667;
+    color: #FFF;
+  }
+
 /*============================================================================================*/
 
 .imgInicio img{
@@ -165,6 +171,51 @@ table tbody tr td.resultados .operacionesTd a{
 
 table tbody tr td.resultados .operacionesTd a:hover{
   color: #F9C3D0;
+}
+
+/* .btnArchivo button.cargarArchivo:hover {
+    background: #000;
+    border: 1px solid #048146;
+    color: #fff;
+}
+
+.btnArchivo button.cargarArchivo span {
+    background-size: 20px;
+    margin-left: 10px;
+}
+
+.btnArchivo button span.btnCargar {
+    background-image: url("../iconos/subir.png");
+}
+
+.btnArchivo button span {
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: 13px;
+    padding-left: 20px;
+}
+
+.btnArchivo button span.btnCargado {
+    background-image: url("../iconos/confirmacion.png");
+} */
+
+.modal .modal-body .btnArchivo button {
+  background: #512d36;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 10px;
+  text-transform: uppercase;
+}
+
+.modal .modal-body .btnArchivo button:hover {
+  background: #f9c3d0;
+  color: #000;
+}
+
+.formularioCamposOcultos, .formularioCamposOcultos input {
+    display: none;
 }
 
 /*.modal .modal-body .formsMovimientos{
@@ -236,6 +287,10 @@ table tbody tr td.resultados .operacionesTd a:hover{
 .modal-body .iconoMensaje{
 	text-align: center;
 }
+
+/* span.password{
+  cursor: pointer;
+} */
 
 .modal-footer {
   display: flex;

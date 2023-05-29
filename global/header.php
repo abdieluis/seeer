@@ -1,8 +1,8 @@
 <?php
-require_once("global/library.php");
+require_once("../global/library.php");
 $tipoUsuario = $_SESSION['idTipoUsuario'];
 
-require_once("popups/popup_cerrar_sesion.php");
+require_once("../popups/popup_cerrar_sesion.php");
 
   $title          = 'CCLMichoacán';
   
@@ -10,10 +10,6 @@ require_once("popups/popup_cerrar_sesion.php");
 <!DOCTYPE html>
 <html>
   <head>
-    <title><?=$title?></title>
-
-    <link rel="icon" href="images/ser.png">
-
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="author" content="CCLMichoacan">
@@ -23,20 +19,23 @@ require_once("popups/popup_cerrar_sesion.php");
     <meta http-equiv="expires" content="0" />
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache" />
+    <title><?=$title?></title>
+    <link rel="icon" href="../images/ser.png">
 
     <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <!-- <script type="text/javascript" src="js/bootstrap.js"></script> -->
     <!-- <script type="text/javascript" src="js/bootstrap.min.js"></script> -->
 
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/jquery-ui.js"></script>
-    <script src="js/message_overlay.js"></script>
-    <script src="js/utilidades.js"></script>
-    <script src="js/validaciones.js"></script>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script src="../js/message_overlay.js"></script>
+    <script src="../js/utilidades.js"></script>
+    <script src="../js/validaciones.js"></script>
+    <script src="../js/md5.js"></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 
     <!-- Se adjuntan los CDNS para la tabla paginada de resultados -->
@@ -51,7 +50,7 @@ require_once("popups/popup_cerrar_sesion.php");
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- <script src="assets/dist/js/bootstrap.bundle.min.js"></script> -->
     <style>
       .bd-placeholder-img {
@@ -141,21 +140,21 @@ require_once("popups/popup_cerrar_sesion.php");
         </button>
 
         <div class="collapse navbar-collapse d-lg-flex divMenu" id="menuSer">
-          <a class="navbar-brand col-lg-3 me-0" href="./"><img src="images/ccl.png" style="width: 15%"></a>
+          <a class="navbar-brand col-lg-3 me-0" href="./"><img src="../images/ccl.png" style="width: 18%; padding: 3%"></a>
           <ul class="navbar-nav col-lg-6 justify-content-lg-center">
             <li class="nav-item">
-              <a class="nav-link menu" aria-current="page" href="forms/form_inicio.php">Inicio</a>
+              <a class="nav-link menu" aria-current="page" href="../forms/">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link menu" href="forms/form_solicitantes.php">Buscar Solicitante</a>
+              <a class="nav-link menu" href="../forms/form_solicitantes.php">Buscar Solicitante</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link menu" href="forms/form_movimientos.php">Movimientos</a>
+              <a class="nav-link menu" href="../forms/form_movimientos.php">Movimientos</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link menu dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Administrador</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Usuarios</a></li>
+                <li><a class="dropdown-item" href="../forms/form_usuarios.php">Usuarios</a></li>
               </ul>
             </li>
           </ul>
@@ -168,9 +167,7 @@ require_once("popups/popup_cerrar_sesion.php");
       </div>
     </nav>
 
-    <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
 
     <div class="cuerpoPrincipal">
-    
-   

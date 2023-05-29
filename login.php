@@ -173,97 +173,97 @@ require_once("popups/popup_message_overlay.php");
 
 
 	<div class="page">
-	  	<div class="container">
-		    <div class="left">
-		      <div class="login">Inicio de sesión</div>
-		      <div class="eula"><img src="images/ser.png"></div>
-		    </div>
-		    <div class="right">
-		      <svg viewBox="0 0 320 300">
-		        <defs>
-		          	<linearGradient
-                        inkscape:collect="always"
-                        id="linearGradient"
-                        x1="13"
-                        y1="193.49992"
-                        x2="307"
-                        y2="193.49992"
-                        gradientUnits="userSpaceOnUse">
-		            	<stop
-		                  	style="stop-color:#d3a929;"
-		                  	offset="0"
-		                  	id="stop876" />
-		            	<stop
-		                  	style="stop-color:#d3a929;"
-		                  	offset="1"
-		                  	id="stop878" />
-		          </linearGradient>
-		        </defs>
-		        <path d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143" />
-		      </svg>
-		      <div class="form">
-		        <label for="usuario">USUARIO</label>
-		        <input type="usuario" id="usuario">
-		        <label for="password">CONTRASEÑA</label>
-		        <input type="password" id="password">
-		        <input type="submit" id="submit" value="ACEPTAR" onclick="iniciarSesion();">
-		      </div>
-		    </div>
+		<div class="container">
+			<div class="left">
+				<div class="login">Inicio de sesión</div>
+					<div class="eula"><img src="images/ser.png"></div>
+				</div>
+				<div class="right">
+					<svg viewBox="0 0 320 300">
+						<defs>
+							<linearGradient
+								inkscape:collect="always"
+								id="linearGradient"
+								x1="13"
+								y1="193.49992"
+								x2="307"
+								y2="193.49992"
+								gradientUnits="userSpaceOnUse">
+									<stop
+										style="stop-color:#d3a929;"
+										offset="0"
+										id="stop876" />
+									<stop
+										style="stop-color:#d3a929;"
+										offset="1"
+										id="stop878" />
+							</linearGradient>
+						</defs>
+						<path d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143" />
+					</svg>
+					<div class="form">
+						<label for="usuario">USUARIO</label>
+						<input type="usuario" id="usuario">
+						<label for="password">CONTRASEÑA</label>
+						<input type="password" id="password">
+						<input type="submit" id="submit" value="ACEPTAR" onclick="iniciarSesion();">
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-
 </body>
 </html>
 <script>
 	// FUNCION DE ANIMACION DEL LOGIN ============================================
 	var current = null;
 	document.querySelector('#usuario').addEventListener('focus', function(e) {
-	  if (current) current.pause();
-	  current = anime({
-	    targets: 'path',
-	    strokeDashoffset: {
-	      value: 0,
-	      duration: 700,
-	      easing: 'easeOutQuart'
-	    },
-	    strokeDasharray: {
-	      value: '240 1386',
-	      duration: 700,
-	      easing: 'easeOutQuart'
-	    }
-	  });
+		if (current) current.pause();
+			current = anime({
+			targets: 'path',
+			strokeDashoffset: {
+				value: 0,
+				duration: 700,
+				easing: 'easeOutQuart'
+		},
+			strokeDasharray: {
+				value: '240 1386',
+				duration: 700,
+				easing: 'easeOutQuart'
+			}
+		});
 	});
 	document.querySelector('#password').addEventListener('focus', function(e) {
-	  if (current) current.pause();
-	  current = anime({
-	    targets: 'path',
-	    strokeDashoffset: {
-	      value: -336,
-	      duration: 700,
-	      easing: 'easeOutQuart'
-	    },
-	    strokeDasharray: {
-	      value: '240 1386',
-	      duration: 700,
-	      easing: 'easeOutQuart'
-	    }
-	  });
+		if (current) current.pause();
+			current = anime({
+			targets: 'path',
+			strokeDashoffset: {
+				value: -336,
+				duration: 700,
+				easing: 'easeOutQuart'
+			},
+			strokeDasharray: {
+				value: '240 1386',
+				duration: 700,
+				easing: 'easeOutQuart'
+			}
+		});
 	});
 	document.querySelector('#submit').addEventListener('focus', function(e) {
-	  if (current) current.pause();
-	  current = anime({
-	    targets: 'path',
-	    strokeDashoffset: {
-	      value: -730,
-	      duration: 700,
-	      easing: 'easeOutQuart'
-	    },
-	    strokeDasharray: {
-	      value: '530 1386',
-	      duration: 700,
-	      easing: 'easeOutQuart'
-	    }
-	  });
+		if (current) current.pause();
+			current = anime({
+			targets: 'path',
+			strokeDashoffset: {
+				value: -730,
+				duration: 700,
+				easing: 'easeOutQuart'
+			},
+			strokeDasharray: {
+				alue: '530 1386',
+				duration: 700,
+				easing: 'easeOutQuart'
+			}
+		});
 	});
 	// ===========================================================================
 
@@ -285,46 +285,44 @@ require_once("popups/popup_message_overlay.php");
 
 			$(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
 			$(".textoMensaje").text("El usuario es obligatorio.");
-    		$("#msj").modal("toggle");
-    		return false;
+			$("#msj").modal("toggle");
+			return false;
 		}
 
 		if (password == "") {
 			$(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
 			$(".textoMensaje").text("La contraseña es obligatorio.");
-    		$("#msj").modal("toggle");
-    		return false;
+			$("#msj").modal("toggle");
+			return false;
 		}
 
 		var json_data = {
-    		"usuario": usuario,
-    		"password": calcMD5(password)
-    	}
-
-    	showMessageOverlay("VALIDANDO USUARIO...", "images/cargando.gif", "200", "200", "sending");
-	    $.ajax({
-	      method:"POST",
-	      url:"backend/backend_login.php",
-	      data:json_data,
-	      success:function(data){
-	        var respuesta = JSON.parse(data);
-
-	        if(respuesta["codigo"] == "fallo"){
-	        	$(".textoMensaje").text(respuesta["mensaje"]);
-			    $("#msj").modal("toggle");
-	            $("#usuario").val("");
-			    $("#password").val("");
-	            closeMessageOverlay();
-	        }
-	        else if(respuesta["codigo"] == "exito"){
-                window.location = ("forms/");
-                $("#usuario").val("");
-                $("#password").val("");
-	            closeMessageOverlay();
-	        }
-	      }
-	    });
-
+			"usuario": usuario,
+			"password": calcMD5(password)
+		}
+		
+		showMessageOverlay("VALIDANDO USUARIO...", "images/cargando.gif", "200", "200", "sending");
+		$.ajax({
+			method:"POST",
+			url:"backend/backend_login.php",
+			data:json_data,
+			success:function(data){
+				var respuesta = JSON.parse(data);
+				if(respuesta["codigo"] == "fallo"){
+					$(".textoMensaje").text(respuesta["mensaje"]);
+					$("#msj").modal("toggle");
+					$("#usuario").val("");
+					$("#password").val("");
+					closeMessageOverlay()
+				}
+				else if(respuesta["codigo"] == "exito"){
+					window.location = ("forms/");
+					$("#usuario").val("");
+					$("#password").val("");
+					closeMessageOverlay();
+				}
+			}
+		});
 	}
 	// ===========================================================================
 
