@@ -54,10 +54,10 @@
 
           $(".selectEstadosActualizar").html(opcionesEstados);
 
-          // $("#estadoSolicitanteActualizacion option:contains("+estadoEditar+")").attr('selected', true);
-
-          // idEstadoSeleccionadoEditar = $("#estadoSolicitanteActualizacion").val();
-          // mostrarMunicipiosEditar(idEstadoSeleccionadoEditar);
+          $("#estadoSolicitanteActualizacion option:contains("+estadoEditar+")").attr('selected', true);
+          idEstadoSeleccionadoEditar = $("#estadoSolicitanteActualizacion").val();
+          
+          mostrarMunicipiosEditar();
 
           closeMessageOverlay();
         }
@@ -67,8 +67,8 @@
   // ============================================================================
 
   // FUNCION SELECT MUNICIPIOS ==================================================
-  function mostrarMunicipiosEditar(idEstadoSeleccionadoEditar){
-
+  function mostrarMunicipiosEditar(){
+    
     var jsonData = {
       "estado": idEstadoSeleccionadoEditar
     }

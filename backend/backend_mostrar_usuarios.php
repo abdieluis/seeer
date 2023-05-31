@@ -2,7 +2,7 @@
 
 require_once ("../db_functions/db_global.php");
 require_once ("../db_functions/db_commited_rolledback.php");
-require_once ("../db_functions/db_audiencia.php");
+require_once ("../db_functions/db_usuarios.php");
 require_once ("../utilidades/funciones_utilidades.php");
 
 if(!isset($backendIncluido)){
@@ -17,22 +17,22 @@ if(!isset($backendIncluido)){
 }
 
   // OBTENER DATOS DEL PRODUCTO POR SU ID
-  $idAudiencia = $_POST['idAudiencia'];
-  $resultadoMostrarAudienciaSeleccionada = obtenerDatosAudienciaSeleccionada($dbConnect, 'idAudiencia', $idAudiencia);
+$idUsuario = $_POST['idUsuario'];
+$resultadoMostrarDatosUsuarios = datosUsuarios($dbConnect, 'idUsuario', $idUsuario);
 
   // MOSTRAR LOS DATOS EN UN OBJETO RESPUESTA
-  if(!empty($resultadoMostrarAudienciaSeleccionada)){
+if(!empty($resultadoMostrarDatosUsuarios)){
 
-    $objetoRespuesta['audienciaSeleccionada'] = $resultadoMostrarAudienciaSeleccionada;
+    $objetoRespuesta['usuarioSeeer'] = $resultadoMostrarDatosUsuarios;
 
     $codigo = "fallo";
-  } else {
-    $mensaje = "No hay audiencias";
+} else {
+    $mensaje = "No hay datos del usuario";
     $objetoRespuesta = "";
-  }
+}
     // =============================================================================================================================================================
 
- if(!isset($backendIncluido)){
+if(!isset($backendIncluido)){
     $ejecutarDb = true;
     $respuesta = committedRolledbackDb($dbConnect, $arrayResultados, $ejecutarDb, $objetoRespuesta, $mensaje);
 
@@ -50,3 +50,6 @@ if(!isset($backendIncluido))
 if(!isset($backendIncluido))
 echo json_encode($respuesta, JSON_ERROR_UTF8);
 //***************************************************************************************************************
+
+
+?>

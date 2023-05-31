@@ -120,12 +120,18 @@ function eliminarUsuario($dbConnect, $estatus, $idUsuario){
     return array($stmt->execute());
 }
 
-// function cambioContrasenia($dbConnect, $password, $idUsuario){
-//     $query = "UPDATE usuarios SET password = ? WHERE idUsuario = ? ";
-//     $stmt = $dbConnect->prepare($query);
-//     $stmt->bind_param('si', $password, $idUsuario);
-//     return array($stmt->execute());
-    
-// }
+function cambioContrasenia($dbConnect, $password, $idUsuario){
+    $query = "UPDATE usuarios SET password = ? WHERE idUsuario = ? ";
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('si', $password, $idUsuario);
+    return array($stmt->execute());
+}
+
+function actualizarDatosUsuario($dbConnect, $nombres, $apellidos, $usuario, $tipo, $ciudad, $idUsuario){
+    $query = 'UPDATE usuarios SET nombres = ?, apellidos = ?, usuario = ?, idTipoUsuario = ?, idCiudad = ? WHERE idUsuario = ?';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('sssiii', $nombres, $apellidos, $usuario, $tipo, $ciudad, $idUsuario);
+    return array($stmt->execute());
+}
 
 ?>

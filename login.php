@@ -310,6 +310,7 @@ require_once("popups/popup_message_overlay.php");
 				var respuesta = JSON.parse(data);
 				if(respuesta["codigo"] == "fallo"){
 					$(".textoMensaje").text(respuesta["mensaje"]);
+					$(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
 					$("#msj").modal("toggle");
 					$("#usuario").val("");
 					$("#password").val("");

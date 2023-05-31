@@ -156,6 +156,8 @@
           else if (movimiento == 1) {
             $(".formsMovimientosSolicitante").html("");
 
+            console.log(idUsuarioSolicitanteGlobal);
+
             var json_data = {
               "idUsuarioSolicitante": idUsuarioSolicitanteGlobal
             }

@@ -36,7 +36,7 @@ if (!empty($datosUsuario)) {
 
 }else{
     $codigo = "fallo";
-    $mensaje = "Datos Incorrectos";
+    $mensaje = "Tu usuario o contraseña son incorrectos favor de reintentarlo.";
     $objetoRespuesta = array();
 }
 

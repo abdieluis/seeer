@@ -3,6 +3,9 @@ require_once ("../db_functions/db_global.php");
 require_once ("../db_functions/db_commited_rolledback.php");
 require_once ("../utilidades/funciones_utilidades.php");
 require_once ("../db_functions/db_usuarios.php");
+require_once ("../db_functions/db_usuario_conciliador.php");
+require_once ("../db_functions/db_usuario_auxiliar.php");
+require_once ("../db_functions/db_usuario_recepcion.php");
 
 if(!isset($backendIncluido)){
     $dbConnect            = comenzarConexion();
@@ -25,10 +28,31 @@ $password  = $_POST['password'];
 $tipo      = $_POST['tipo'];
 $ciudad    = $_POST['ciudad'];
 
+if ($tipo == 2){ //tipo 2 es conciliador
+
+    // SE REGISTRA EN LA TABLA DEL TIPO DEL USUARIO CONCILIADOR
+    $resultadoUsuarioConciliadorRegistro  = registrarUsuarioConciliador($dbConnect, $nombres, $apellidos, $ciudad);
+    $arrayResultados                      = unirArrays($arrayResultados, $resultadoUsuarioConciliadorRegistro);
+}
+elseif ($tipo == 3){ // tipo 3 es auxiliar
+
+    $idUsuarioConciliador = $_POST['idUsuarioConciliador'];
+
+    // SE REGISTRA EN LA TABLA DEL TIPO DEL USUARIO AUXILIAR
+    $resultadoUsuarioAuxiliarRegistro  = registrarUsuarioAuxiliar($dbConnect, $nombres, $apellidos, $ciudad, $idUsuarioConciliador);
+    $arrayResultados                   = unirArrays($arrayResultados, $resultadoUsuarioAuxiliarRegistro);
+
+}
+elseif ($tipo == 4){ //tipo 4 es recepcion
+    // SE REGISTRA EN LA TABLA DEL TIPO DEL USUARIO RECEPCION
+    $resultadoUsuarioRecepcionRegistro = registrarUsuarioRecepcion($dbConnect, $nombres, $apellidos, $ciudad);
+    $arrayResultados                   = unirArrays($arrayResultados, $resultadoUsuarioRecepcionRegistro);
+}
 
 // SE REGISTRA AL USUARIO
 $resultadoUsuarioRegistro  = registrarUsuario($dbConnect, $nombres, $apellidos, $usuario, $password, $tipo, $ciudad);
-$arrayResultados            = unirArrays($arrayResultados, $resultadoUsuarioRegistro);
+$arrayResultados           = unirArrays($arrayResultados, $resultadoUsuarioRegistro);
+
 
 if(!isset($backendIncluido)){
     $ejecutarDb   = true;

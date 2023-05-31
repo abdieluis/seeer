@@ -302,9 +302,12 @@
                                 <button class='col-sm-12 cargarArchivo' onClick='clickCargarArchivoCuantificacion();'><i class='bx bx-import'></i> Sube la Cuantificación</button>
                             </div>
                         </div>
-                        <!-- <div class="col-md-6">
-                            <div class="input-group mb-3 opcionesCiudad"></div>
-                        </div> -->
+                        <br><br>
+                        <center><div class="col-md-12" style="font-weight: bold;">SELECCIONA EL CENTRO DE CONCILIACIÓN</div></center>
+                        <br><br>
+                        <div class="col-md-12">
+                            <div class="input-group mb-3 opcionesCiudadRatificacion"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -358,6 +361,8 @@
         <input type="text" name="municipioEmpresa" id="municipioEmpresa" />
         <input type="text" name="telefonoEmpresa" id="telefonoEmpresa" />
         <input type="text" name="emailEmpresa" id="emailEmpresa" />
+
+        <input type="text" name="ciudadRatificacion" id="ciudadRatificacion" />
 
         <input type="file" name="cuantificacion" id="cuantificacion" accept="application/pdf, image/*" onChange="cambioArchivoCuantificacion();" />
     </form>
@@ -555,52 +560,48 @@ function cambioArchivoCuantificacion(){
     }
   // ============================================================================
 
-//   // FUNCION SELECT CIUDAD DE ALTA SOLICITANTE ==================================
-//   function mostrarCiudadAltaSolicitante(){
+  // FUNCION SELECT CIUDAD RATIFICACION =========================================
+    function mostrarCiudadRatificacion(){
 
-//     var ciudadAltaCentro = $("#municipioSolicitanteAlta option:selected").attr("centro");
+        showMessageOverlay("CARGANDO...", "images/cargando.gif", "200", "200", "sending");
+        $.ajax({
+        method:"POST",
+        url:"backend/backend_mostrar_ciudades.php",
+        data:"",
+            success:function(data){
+                var respuesta = JSON.parse(data);
 
-//     showMessageOverlay("CARGANDO...", "../images/cargando.gif", "200", "200", "sending");
-//     $.ajax({
-//       method:"POST",
-//       url:"../backend/backend_mostrar_ciudades.php",
-//       data:"",
-//       success:function(data){
-//         var respuesta = JSON.parse(data);
+                if(respuesta["codigo"] == "fallo"){
+                    $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+                    $(".textoMensaje").text(respuesta["mensaje"]);
+                    $("#msj").modal("toggle");
+                    closeMessageOverlay();
+                }
+                else if(respuesta["codigo"] == "exito"){
+                    var resultados = respuesta["objetoRespuesta"]["ciudad"];
+                    // console.log(resultados);
 
-//         if(respuesta["codigo"] == "fallo"){
-//           $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-//           $(".textoMensaje").text(respuesta["mensaje"]);
-//           $("#msj").modal("toggle");
-//           closeMessageOverlay();
-//         }
-//         else if(respuesta["codigo"] == "exito"){
-//           var resultados = respuesta["objetoRespuesta"]["ciudad"];
-//           // console.log(resultados);
+                    var opcionesCiudad = "<option value='-1'>Municipio de Registro</option>";
 
-//           var opcionesCiudad = "<option value='-1'>Municipio de Registro</option>";
+                    for (i = 0; i < resultados.length; i++) {
+                        var resultadosTotales = resultados[i];
+                        var idCiudad = resultadosTotales["idCiudad"];
+                        var ciudad   = resultadosTotales["ciudad"];
 
-//           for (i = 0; i < resultados.length; i++) {
-//             var resultadosTotales = resultados[i];
-//             var idCiudad = resultadosTotales["idCiudad"];
-//             var ciudad   = resultadosTotales["ciudad"];
+                        opcionesCiudad += "<option value='"+idCiudad+"'>"+ciudad+"</option>";
+                    }
+                    var htmlSelectCiudad =
+                    "<label class='input-group-text' for='ciudadRatificacionAlta'><i class='bx bx-map'></i></label>"+
+                    "<select class='form-select' id='ciudadRatificacionAlta'>"+opcionesCiudad+"</select>";
 
-//             opcionesCiudad += "<option value='"+idCiudad+"'>"+ciudad+"</option>";
-//           }
-//           var htmlSelectCiudad =
-//           "<label class='input-group-text' for='ciudadSolicitanteAlta'><i class='bx bx-map'></i></label>"+
-//           "<select class='form-select' id='ciudadSolicitanteAlta'>"+opcionesCiudad+"</select>";
-//           $(".opcionesCiudad").html(htmlSelectCiudad);
+                    $(".opcionesCiudadRatificacion").html(htmlSelectCiudad);
 
-//           $("#ciudadSolicitanteAlta option[value='"+ciudadAltaCentro+"'").attr("selected",true);
-
-//           closeMessageOverlay();
-                
-//         }
-//       }
-//     });
-//   }
-//   // ============================================================================
+                    closeMessageOverlay();
+                }
+            }
+        });
+    }
+  // ============================================================================
 
   // FUNCION ABRIR POPUP ========================================================
     function abrirPopupGenerarRatificacionUsuario(){
@@ -609,6 +610,7 @@ function cambioArchivoCuantificacion(){
 
         mostrarEstadosTrabajador();
         mostrarEstadosEmpresa();
+        mostrarCiudadRatificacion();
 
         $("#altaRatificacionUsuario").modal("toggle");
     }
@@ -671,7 +673,9 @@ function cambioArchivoCuantificacion(){
         var estadoEmpresaAltaSelect            = $("#estadoEmpresaAlta option:selected").val();
         var municipioEmpresaAltaSelect         = $("#municipioEmpresaAlta option:selected").val();
 
-        var horarioTrabajador = horarioInicioTrabajadorAlta+"-"+horarioFinTrabajadorAlta;
+        var horarioTrabajador                  = horarioInicioTrabajadorAlta+"-"+horarioFinTrabajadorAlta;
+
+        var ciudadRatificacion                 = $("#ciudadRatificacionAlta option:selected").val();
 
         // CONDICIONES PARA HACER OBLIGATORIOS LOS INPUT ==================================
         if (fechaInicioLaboralTrabajadorAlta == "") {
@@ -953,6 +957,14 @@ function cambioArchivoCuantificacion(){
             $("#msj").modal("toggle");
             return false;
         }
+        
+        if (ciudadRatificacion == "-1") {
+            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+            $(".textoMensaje").text("Selecciona la ciudad en donde se realizará la ratificación.");
+            $("#msj").modal("toggle");
+            return false;
+        }
+
         // ================================================================================
 
         $("#formRatificacionesUsuarioPublicoAlta #fechaInicioLaboralTrabajador").val(fechaInicioLaboralTrabajadorAlta);
@@ -998,6 +1010,7 @@ function cambioArchivoCuantificacion(){
         $("#formRatificacionesUsuarioPublicoAlta #municipioEmpresa").val(municipioEmpresaAlta);
         $("#formRatificacionesUsuarioPublicoAlta #telefonoEmpresa").val(telefonoEmpresaAlta);
         $("#formRatificacionesUsuarioPublicoAlta #emailEmpresa").val(emailEmpresa);
+        $("#formRatificacionesUsuarioPublicoAlta #ciudadRatificacion").val(ciudadRatificacion);
         
         $("#formRatificacionesUsuarioPublicoAlta").submit();
 
@@ -1034,7 +1047,7 @@ function cambioArchivoCuantificacion(){
                 else if(resultado["codigo"] == "exito"){
                     $(".btnCancelarRatificacionUsuario").click();
                     $(".iconoMensaje").html("<i class='bx bx-check-circle bx-tada bx-lg' style='color:#0ea202' ></i>");
-                    $(".textoMensaje").text(respuesta["mensaje"]);
+                    $(".textoMensaje").text(resultado["mensaje"]);
                     $("#msj").modal("toggle");
                     closeMessageOverlay();
                 }

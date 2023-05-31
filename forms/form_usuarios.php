@@ -41,7 +41,7 @@ $idUsuario   = $_SESSION['idUsuario'];
 										<td class="resultados">
                                             <div class="operacionesTd">
                                                 <a href="#" onclick="abrirPopupConfirmarEliminacion('.$datos[$i]["idUsuario"].', 3)"><i class="bx bxs-trash"></i></a>
-                                                <a href="#" onclick="abrirPopupEditarDatosUsuario('.$datos[$i]["idUsuario"].')"><i class="bx bx-pencil"></i></a>
+                                                <a href="#" onclick="abrirPopupActualizarUsuarios('.$datos[$i]["idUsuario"].')"><i class="bx bx-pencil"></i></a>
                                             </div>
                                         </td>
 									</tr>'; 

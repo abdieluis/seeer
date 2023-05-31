@@ -3,9 +3,8 @@ require_once ("../db_functions/db_global.php");
 require_once ("../db_functions/db_commited_rolledback.php");
 require_once ("../utilidades/funciones_utilidades.php");
 require_once ("../db_functions/db_ratificacion.php");
-require_once ("../db_functions/db_usuarios.php");
-require_once ("../db_functions/db_usuarios_solicitante.php");
-require_once ("../db_functions/db_log_movimiento.php");
+require_once ("../db_functions/db_usuario_auxiliar.php");
+require_once ("../db_functions/db_ratificacion.php");
 require_once ("../utilidades/subir_archivos.php");
 
 if(!isset($backendIncluido)){
@@ -64,30 +63,13 @@ $estadoEmpresa                  = $_POST['estadoEmpresa'];
 $municipioEmpresa               = $_POST['municipioEmpresa'];
 $telefonoEmpresa                = $_POST['telefonoEmpresa'];
 $emailEmpresa                   = strtolower($_POST['emailEmpresa']);
-$cuantificacion                 = $_FILES['cuantificacion'];
 
-$tamanio = 200;
+$idCiudad                       = $_POST['ciudadRatificacion'];
 
-// if(isset($cuantificacion) && $cuantificacion['type']=='application/pdf'){
-// 	move_uploaded_file ($cuantificacion['tmp_name'] , '../documentoCuantificacion/'.$cuantificacion['name']);
-// }
+if(isset($_FILES['cuantificacion']) && $_FILES['cuantificacion']['type'] == 'application/pdf'){
 
-if(isset($cuantificacion) && $cuantificacion['type'] == 'application/pdf'){
-    // if($cuantificacion['size'] < ($tamanio * 1024)){
     $propuestaCuatificacion = $nombresTrabajador."-".$apellidosTrabajador."-Cuantificacion";
 
-    $ruta = "../documentoCuantificacion";
-
-    $extensionesValidas     = "pdf";
-
-    if($cuantificacion['name']){
-        $name = $cuantificacion['name'];
-        $ext = pathinfo($name, PATHINFO_EXTENSION);
-        $propuestaCuatificacion = $nombresTrabajador."-".$apellidosTrabajador."-Cuantificacion";
-        $resultado              = subirArchivo($extensionesValidas, $cuantificacion, $propuestaCuatificacion, $ruta);
-        $arrayResultados        = unirArrays($arrayResultados, array($resultado));
-        $propuestaCuatificacion = $propuestaCuatificacion.".".$ext;
-    }
 
     // SE REGISTRA LA RATIFICAIÓN
     $resultadoSolicitudes  = registrarRatificacion($dbConnect, $fechaInicioLaboralTrabajador, $fechaFinLaboralTrabajador, $nombresTrabajador, $apellidosTrabajador, $generoTrabajador, 
@@ -95,35 +77,51 @@ if(isset($cuantificacion) && $cuantificacion['type'] == 'application/pdf'){
     $municipioTrabajador, $curpTrabajador, $rfcTrabajador, $nssTrabajador, $tipoIdentificacionTrabajador, $numeroIdentificacionTrabajador, $emailTrabajador, $telefonoTrabajador, 
     $sueldoTrabajador, $tipoSueldoTrabajador, $horarioTrabajador, $horasLaboradasTrabajador, $razonSocialEmpresa, $nombreComercialEmpresa, $nombrePatronEmpresa, $dedicaEmpresa, 
     $curpRfcEmpresa, $calleEmpresa, $numeroExteriorEmpresa, $numeroIneriorEmpresa, $coloniaEmpresa, $cpEmpresa, $estadoEmpresa, $municipioEmpresa, $telefonoEmpresa, $emailEmpresa, 
-    $propuestaCuatificacion);
-    // }else{
-    //     echo "El documento debe pesar menos.";
-    // }
+    $propuestaCuatificacion, $fechaOper);
 }
 
 // =================================================================================
-// SE OBTIENEN LOS DATOS DE USUARIO ENTRE OTROS DETALLES PARA EL LOG DE MOVIMIENTOS
+// SE OBTIENEN LOS DATOS DE USUARIO AUXILIAR
 // =================================================================================
-// $resultadoMostrarDatosUsuario = obtenerDatosLogMovimiento($dbConnect, 'idUsuario', $idUsuario);
-// $nombreUsuario = $resultadoMostrarDatosUsuario['nombres'];
-// $apellidosUsuario = $resultadoMostrarDatosUsuario['apellidos'];
-// $ciudadUsuario = $resultadoMostrarDatosUsuario['ciudad'];
-// $nombreCompletoUsuario = $nombreUsuario ." ". $apellidosUsuario;
-// $resultadoMostrarDatosUsuarioSolicitante = obtenerDatosUsuarioSolicitanteSeleccionado($dbConnect, 'idUsuarioSolicitante', $idUsuarioSolicitante);
-// $nombreSolicitante    = $resultadoMostrarDatosUsuarioSolicitante['nombres'];
-// $apellidosSolicitante = $resultadoMostrarDatosUsuarioSolicitante['apellidos'];
-// $nombreCompletoSolicitante = $nombreSolicitante ." ". $apellidosSolicitante;
-// $detalleMovimiento  = "El usuario ".$nombreCompletoUsuario." dio de alta una solicitud en la ciudad de ".$ciudadUsuario." a nombre del solicitante ".$nombreCompletoSolicitante." ";
-// $areaMovimiento = "Solicitudes";
+$usuarios = array();
 
-// SE CREA EL LOG DE MOVIMIENTOS
+$resultadoMostrarDatosUsuarioAuxiliar = obtenerAuxiliarCiudad($dbConnect, 'idCiudad', $idCiudad);
 
-// $resultadoCrearLogMovimientos = registrarLogMovimientos($dbConnect, $fechaOper, $horaOper, $idUsuario, $idUsuarioSolicitante, $ciudadUsuario, $areaMovimiento, $detalleMovimiento);
-
-// $arrayResultados = unirArrays($arrayResultados, $resultadoCrearLogMovimientos);
-
+for ($i = 0; $i < count($resultadoMostrarDatosUsuarioAuxiliar); $i++) {
+    $usuarios[] = $resultadoMostrarDatosUsuarioAuxiliar[$i]["idUsuarioAuxiliar"];
+}
 // =================================================================================
 
+// =================================================================================
+// SE OBTIENEN EL ID DE LA RATIFICACIÓN CREADA
+// =================================================================================
+
+$resultadoMostrarUltimaRatificacionCreada = obtenerLaUltimaRatificacionCreada($dbConnect);
+
+$idRatificacion = $resultadoMostrarUltimaRatificacionCreada["idRatificacion"];
+
+// =================================================================================
+// SE REALIZA TODO EL CAGADERO DE INSERTALE LA RATIFICACION AL USUARIO
+// =================================================================================
+
+$indice_usuario_actual = 0;
+
+// Obtener el ID del usuario actual
+$idUsuarioAuxiliar = $usuarios[$indice_usuario_actual];
+
+// Actualizar la tarea con el ID del usuario actual
+$insertarRatificacionUsuarioAuxiliar = insertarRatificacionAuxiliar($dbConnect, $idUsuarioAuxiliar, $idRatificacion);
+
+// Incrementar el índice del usuario actual
+$indice_usuario_actual++;
+
+// Verificar si se ha llegado al final del arreglo de usuarios
+if ($indice_usuario_actual >= count($usuarios)) {
+    // Reiniciar el índice al primer usuario
+    $indice_usuario_actual = 0;
+}
+
+// =================================================================================
 
 if(!isset($backendIncluido)){
     $ejecutarDb = true;
@@ -144,5 +142,19 @@ if(!isset($backendIncluido))
 //***********************************************************************************************
 echo json_encode(constructorRespuesta($codigo, $mensaje, $objetoRespuesta), JSON_ERROR_UTF8);
 //***********************************************************************************************
+
+
+// CONSULTA PARA TRAER LOS AUXILIARES QUE NO TIENEN RATIFICACIONES ASIGNADAS
+// SELECT a.idUsuarioAuxiliar, a.nombres
+// FROM usuario_auxiliar a
+// LEFT JOIN ratificacion r ON a.idUsuarioAuxiliar = r.idUsuarioAuxiliar
+// WHERE r.idRatificacion IS NULL;
+
+
+// CONSULTA PARA TRAER LOS AUXILIARES CON RATIFICACIONES ASIGNADAS
+// SELECT a.idUsuarioAuxiliar, a.nombres
+// FROM usuario_auxiliar a
+// JOIN ratificacion r ON a.idUsuarioAuxiliar = r.idUsuarioAuxiliar;
+
 
 ?>

@@ -41,17 +41,17 @@
                         </div>
                         <div class="col-md-6">
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1"><i class='bx bx-id-card'></i></span>
-                                <select class="form-select selectTiopoUsuario" id="tipoUsuarioAlta"></select>
+                                <span class="input-group-text" id="basic-addon1"><i class='bx bx-map'></i></span>
+                                <select class="form-select selectCiudades" id="ciudadUsuarioAlta" onchange="cambiarCiudadUsuario();"></select>
                             </div>
                         </div>
-
                         <div class="col-md-6 ms-auto">
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1"><i class='bx bx-map'></i></span>
-                                <select class="form-select selectCiudades" id="ciudadUsuarioAlta"></select>
+                                <span class="input-group-text" id="basic-addon1"><i class='bx bx-id-card'></i></span>
+                                <select class="form-select selectTiopoUsuario" id="tipoUsuarioAlta" onchange="mostrarConciliador(this);"></select>
                             </div>
                         </div>
+                        <div class="col-md-6 selectConciliador"></div>
                     </div>
                 </div>
             </div>
@@ -85,6 +85,13 @@ function ocultarMostrarContrasena(){
 }
 // ============================================================================
 
+// FUNCION CAMBIAR LA CIUDAD ==================================================
+function cambiarCiudadUsuario(){
+    $(".selectConciliador").html("");
+    $("#tipoUsuarioAlta").val("-1");
+}
+// ============================================================================
+
 // FUNCION SELECT TIPO USUARIO ================================================
 function mostrarTipoUsuario(){
     showMessageOverlay("CARGANDO...", "../images/cargando.gif", "200", "200", "sending");
@@ -93,33 +100,94 @@ function mostrarTipoUsuario(){
         url:"../backend/backend_mostrar_usuario_categoria.php",
         data:"",
         success:function(data){
-        var respuesta = JSON.parse(data);
+            var respuesta = JSON.parse(data);
 
-        if(respuesta["codigo"] == "fallo"){
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text(respuesta["mensaje"]);
-            $("#msj").modal("toggle");
-            closeMessageOverlay();
-        }
-        else if(respuesta["codigo"] == "exito"){
-            var resultados = respuesta["objetoRespuesta"]["tipoUsuario"];
-
-
-            var opcionesUsuarios = "<option value='-1'>Selecciona El Tipo De Usuario</option>";
-
-            for (i = 0; i < resultados.length; i++) {
-                var resultadosTotales = resultados[i];
-                var idTipoUsuario = resultadosTotales["idTipoUsuario"];
-                var tipoUsuario   = resultadosTotales["tipoUsuario"];
-
-                opcionesUsuarios += "<option value='"+idTipoUsuario+"'>"+tipoUsuario+"</option>";
+            if(respuesta["codigo"] == "fallo"){
+                $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+                $(".textoMensaje").text(respuesta["mensaje"]);
+                $("#msj").modal("toggle");
+                closeMessageOverlay();
             }
+            else if(respuesta["codigo"] == "exito"){
+                var resultados = respuesta["objetoRespuesta"]["tipoUsuario"];
 
-            $(".selectTiopoUsuario").html(opcionesUsuarios);
-            closeMessageOverlay();
-        }
+
+                var opcionesUsuarios = "<option value='-1'>Selecciona El Tipo De Usuario</option>";
+
+                for (i = 0; i < resultados.length; i++) {
+                    var resultadosTotales = resultados[i];
+                    var idTipoUsuario = resultadosTotales["idTipoUsuario"];
+                    var tipoUsuario   = resultadosTotales["tipoUsuario"];
+
+                    opcionesUsuarios += "<option value='"+idTipoUsuario+"'>"+tipoUsuario+"</option>";
+                }
+
+                $(".selectTiopoUsuario").html(opcionesUsuarios);
+                closeMessageOverlay();
+            }
         }
     });
+}
+// ============================================================================
+
+// FUNCION MOSTRAR CONCILIDOR =================================================
+function mostrarConciliador(e){
+    var tipoUsurio = $(e).val();
+    var idCiudadSeleccionado = $("#ciudadUsuarioAlta option:selected").val();
+
+    if (idCiudadSeleccionado == "-1") {
+        $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        $(".textoMensaje").text("Selecciona la ciudad del usuario que vas a dar de alta.");
+        $("#msj").modal("toggle");
+        $("#tipoUsuarioAlta").val("-1");
+        return false;
+    }
+
+    var jsonData = {
+        "idCiudad": idCiudadSeleccionado
+    }
+    
+    if (tipoUsurio == 3) {
+        showMessageOverlay("CARGANDO...", "../images/cargando.gif", "200", "200", "sending");
+        $.ajax({
+            method:"POST",
+            url:"../backend/backend_mostrar_usuario_conciliador.php",
+            data:jsonData,
+            success:function(data){
+                var respuesta = JSON.parse(data);
+
+                if(respuesta["codigo"] == "fallo"){
+                    $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+                    $(".textoMensaje").text(respuesta["mensaje"]);
+                    $("#msj").modal("toggle");
+                    closeMessageOverlay();
+                }
+                else if(respuesta["codigo"] == "exito"){
+                    var resultados = respuesta["objetoRespuesta"]["usuarioConciliador"];
+                    console.log(resultados);
+
+                    var opcionesUsuariosCpnciliador = "<option value='-1'>Selecciona El Conciliador del Auxiliar</option>";
+
+                    for (i = 0; i < resultados.length; i++) {
+                        var resultadosTotales = resultados[i];
+                        var idUsuarioConciliador = resultadosTotales["idUsuarioConciliador"];
+                        var nombres              = resultadosTotales["nombres"];
+                        var apellidos            = resultadosTotales["apellidos"];
+                        
+                        opcionesUsuariosCpnciliador += "<option value='"+idUsuarioConciliador+"'>"+nombres+" "+apellidos+"</option>";
+
+                        var htmlSelectConciliadores =
+                        "<div class='input-group mb-3'>"+
+                            "<span class='input-group-text' id='basic-addon1'><i class='bx bx-id-card'></i></span>"+
+                            "<select class='form-select' id='usuarioConciliadorAlta'>"+opcionesUsuariosCpnciliador+"</select>"+
+                        "</div>";
+                        $(".selectConciliador").html(htmlSelectConciliadores);
+                    }
+                    closeMessageOverlay();
+                }
+            }
+        });
+    }
 }
 // ============================================================================
 
@@ -131,31 +199,31 @@ function mostrarCiudad(){
         url:"../backend/backend_mostrar_ciudades.php",
         data:"",
         success:function(data){
-        var respuesta = JSON.parse(data);
+            var respuesta = JSON.parse(data);
 
-        if(respuesta["codigo"] == "fallo"){
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text(respuesta["mensaje"]);
-            $("#msj").modal("toggle");
-            closeMessageOverlay();
-        }
-        else if(respuesta["codigo"] == "exito"){
-            var resultados = respuesta["objetoRespuesta"]["ciudad"];
-
-
-            var opcionesCiudad = "<option value='-1'>Selecciona La Ciudad</option>";
-
-            for (i = 0; i < resultados.length; i++) {
-                var resultadosTotales = resultados[i];
-                var idCiudad = resultadosTotales["idCiudad"];
-                var ciudad   = resultadosTotales["ciudad"];
-
-                opcionesCiudad += "<option value='"+idCiudad+"'>"+ciudad+"</option>";
+            if(respuesta["codigo"] == "fallo"){
+                $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+                $(".textoMensaje").text(respuesta["mensaje"]);
+                $("#msj").modal("toggle");
+                closeMessageOverlay();
             }
+            else if(respuesta["codigo"] == "exito"){
+                var resultados = respuesta["objetoRespuesta"]["ciudad"];
 
-            $(".selectCiudades").html(opcionesCiudad);
-            closeMessageOverlay();
-        }
+
+                var opcionesCiudad = "<option value='-1'>Selecciona La Ciudad</option>";
+
+                for (i = 0; i < resultados.length; i++) {
+                    var resultadosTotales = resultados[i];
+                    var idCiudad = resultadosTotales["idCiudad"];
+                    var ciudad   = resultadosTotales["ciudad"];
+
+                    opcionesCiudad += "<option value='"+idCiudad+"'>"+ciudad+"</option>";
+                }
+
+                $(".selectCiudades").html(opcionesCiudad);
+                closeMessageOverlay();
+            }
         }
     });
 }
@@ -170,6 +238,7 @@ function altaUsuario(){
     var contrasenaUsuario = $("#contrasenaUsuarioAlta").val();
     var tipoUsuario       = $("#tipoUsuarioAlta").val();
     var ciudadUsuario     = $("#ciudadUsuarioAlta").val();
+    var conciliador       = $("#usuarioConciliadorAlta").val();
 
     if (nombresUsuario == "") {
         $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
@@ -213,13 +282,35 @@ function altaUsuario(){
         return false;
     }
 
-    var json_data = {
-        "nombres": nombresUsuario,
-        "apellidos": apellidosUsuario,
-        "usuario": usuario,
-        "password": calcMD5(contrasenaUsuario),
-        "tipo": tipoUsuario,
-        "ciudad": ciudadUsuario
+    if (tipoUsuario == 3) {
+        if (conciliador == "-1") {
+            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+            $(".textoMensaje").text("Selecciona el conciliador del usuario auxiliar.");
+            $("#msj").modal("toggle");
+            return false;
+        }
+
+        var json_data = {
+            "nombres": nombresUsuario,
+            "apellidos": apellidosUsuario,
+            "usuario": usuario,
+            "password": calcMD5(contrasenaUsuario),
+            "tipo": tipoUsuario,
+            "ciudad": ciudadUsuario,
+            "idUsuarioConciliador": conciliador
+        }
+
+        
+    }
+    else {
+        var json_data = {
+            "nombres": nombresUsuario,
+            "apellidos": apellidosUsuario,
+            "usuario": usuario,
+            "password": calcMD5(contrasenaUsuario),
+            "tipo": tipoUsuario,
+            "ciudad": ciudadUsuario
+        }
     }
 
     showMessageOverlay("CARGANDO...", "../images/cargando.gif", "200", "200", "sending");
@@ -235,11 +326,9 @@ function altaUsuario(){
                 $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
                 $(".textoMensaje").text(respuesta["mensaje"]);
                 $("#msj").modal("toggle");
-                limpiarCampos();
                 closeMessageOverlay();
             }
             else if(respuesta["codigo"] == "exito"){
-                limpiarCampos();
                 $(".btnCancelarUsuario").click();
                 $(".iconoMensaje").html("<i class='bx bx-check-circle bx-tada bx-lg' style='color:#0ea202' ></i>");
                 $(".textoMensaje").text(respuesta["mensaje"]);

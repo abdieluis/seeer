@@ -306,14 +306,14 @@
                                     <i class='bx bxl-facebook-circle'></i>
                                 </a>
                             </li>
-                            <!-- <li>
-                                <a class="text-white px-2" href="#!">
+                            <li>
+                                <a class="text-white px-2" href="https://www.instagram.com/conciliacionlaboralmichoacan/">
                                     <i class='bx bxl-instagram-alt' ></i>
                                 </a>
-                            </li> -->
+                            </li>
                             <li>
                                 <a class="text-white ps-2" href="https://cclmichoacan.gob.mx/">
-                                    <i class='bx bxl-chrome'></i>
+                                    <i class='bx bx-globe'></i>
                                 </a>
                             </li>
                         </ul>

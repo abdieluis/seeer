@@ -1,6 +1,7 @@
 <?php
 require_once("../global/library.php");
 $tipoUsuario = $_SESSION['idTipoUsuario'];
+$idUsuario   = $_SESSION['idUsuario'];
 
 require_once("../popups/popup_cerrar_sesion.php");
 
@@ -151,11 +152,16 @@ require_once("../popups/popup_cerrar_sesion.php");
             <li class="nav-item">
               <a class="nav-link menu" href="../forms/form_movimientos.php">Movimientos</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link menu dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Administrador</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="../forms/form_usuarios.php">Usuarios</a></li>
-              </ul>
+            <?php if ($tipoUsuario == 1) { ?>
+              <li class="nav-item dropdown">
+                <a class="nav-link menu dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Administrador</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="../forms/form_usuarios.php">Usuarios</a></li>
+                </ul>
+              </li>
+            <?php } ?>
+            <li class="nav-item">
+              <a class="nav-link menu" href="#" onclick="abrirPopupCambiarContrasenia(<?=$idUsuario?>);">Cambiar contraseña</a>
             </li>
           </ul>
           <div class="d-lg-flex col-lg-3 justify-content-lg-end navCerrarSesion">
@@ -166,7 +172,6 @@ require_once("../popups/popup_cerrar_sesion.php");
         </div>
       </div>
     </nav>
-
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
 
