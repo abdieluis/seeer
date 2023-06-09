@@ -2,6 +2,7 @@
 require_once("../global/library.php");
 $tipoUsuario = $_SESSION['idTipoUsuario'];
 $idUsuario   = $_SESSION['idUsuario'];
+// print_r($idUsuario);
 
 require_once("../popups/popup_cerrar_sesion.php");
 
@@ -125,6 +126,35 @@ require_once("../popups/popup_cerrar_sesion.php");
       .bd-mode-toggle {
         z-index: 1500;
       }
+
+      /* estilos en el menu icono campanita */
+      .notification-icon {
+          position: relative;
+          width: 30px;
+          height: 30px;
+          background-color: #512D36; /* Cambia el color de fondo según tus necesidades */
+          border-radius: 50%;
+          color: #fff;
+      }
+
+      .notification-icon .iconoCampana{
+        padding: 7px;
+      }
+
+      .notification-count {
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          width: 15px;
+          height: 15px;
+          background-color: #512D36; /* Cambia el color de fondo según tus necesidades */
+          border-radius: 50%;
+          font-size: 10px;
+          color: #fff; /* Cambia el color del texto según tus necesidades */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
     </style>
 
     
@@ -163,6 +193,17 @@ require_once("../popups/popup_cerrar_sesion.php");
             <li class="nav-item">
               <a class="nav-link menu" href="#" onclick="abrirPopupCambiarContrasenia(<?=$idUsuario?>);">Cambiar contraseña</a>
             </li>
+            <?php if ($tipoUsuario == 3) { ?>
+              <li class="nav-item">
+                <a class="nav-link menu" href="../forms/form_ratificacion_auxiliar.php"><div class="notification-icon" id="notificationIcon"><i class='bx bx-bell iconoCampana'></i></div></a>
+                
+              </li>
+            <?php } ?>
+            <?php if ($tipoUsuario == 4) { ?>
+              <li class="nav-item">
+                <a class="nav-link menu" href="../forms/form_ratificacion_asignar.php">Ratificaciones</a>
+              </li>
+            <?php } ?>
           </ul>
           <div class="d-lg-flex col-lg-3 justify-content-lg-end navCerrarSesion">
             <li class="nav-item" style="list-style: none;">
@@ -173,6 +214,52 @@ require_once("../popups/popup_cerrar_sesion.php");
       </div>
     </nav>
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // EVENTO READY FUNCION PARA TRAER LAS RATIFICACIONES DEL USUARIO AUXILIAR QUE INICIO SESIÓN =========
+      $(document).ready(function () {
+        var notificationIcon = document.getElementById('notificationIcon');
+
+        var idUsuarioSeeer = <?=$idUsuario?>;
+      
+        var json_data = {
+            "idUsuario": idUsuarioSeeer
+        }
+
+        showMessageOverlay("CARGANDO...", "../images/cargando.gif", "200", "200", "sending");
+        $.ajax({
+            method:"POST",
+            url:"../backend/backend_mostrar_ratificaciones_asignadas_usuario.php",
+            data:json_data,
+            success:function(data){
+                var respuesta = JSON.parse(data);
+
+                if(respuesta["codigo"] == "fallo"){
+                    $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+                    $(".textoMensaje").text(respuesta["mensaje"]);
+                    $("#msj").modal("toggle");
+                    closeMessageOverlay();
+                }
+                else if(respuesta["codigo"] == "exito"){
+                  // Aquí obtienes el número de notificaciones asignadas
+                    var resultado = respuesta["objetoRespuesta"]["ratificacionAsignada"];// Reemplaza con el número de ratificaciones asignadas
+                    var numRatificaciones = resultado["total_ratificaciones"];
+
+                    if (numRatificaciones > 0) {
+                      var notificationCount = document.createElement('div');
+                      notificationCount.classList.add('notification-count');
+                      notificationCount.innerText = numRatificaciones;
+
+                      notificationIcon.appendChild(notificationCount);
+                    }
+
+                    closeMessageOverlay();
+                }
+            }
+        });
+      });
+      // ===================================================================================================
+
+    </script>
 
 
     <div class="cuerpoPrincipal">

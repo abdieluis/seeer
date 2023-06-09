@@ -63,4 +63,4 @@ $(document).ready(function () {
 </script>
 <?php
 require_once("../global/footer.php");
-?>s
+?>

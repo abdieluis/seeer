@@ -33,6 +33,8 @@ if (!empty($datosUsuario)) {
     $_SESSION['nombreUsuario']   = $datosUsuario['nombres'];
     $_SESSION['apellidoUsuario'] = $datosUsuario['apellidos'];
     $_SESSION['idTipoUsuario']   = $datosUsuario['idTipoUsuario'];
+    $_SESSION['idCiudad']        = $datosUsuario['idCiudad'];
+    // print_r($_SESSION);
 
 }else{
     $codigo = "fallo";

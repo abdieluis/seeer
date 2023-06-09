@@ -214,6 +214,21 @@ table tbody tr td.resultados .operacionesTd a:hover{
   color: #000;
 }
 
+.row .btnArchivo button {
+  background: #512d36;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 10px;
+  text-transform: uppercase;
+}
+
+.row .btnArchivo button:hover {
+  background: #f9c3d0;
+  color: #000;
+}
+
 .formularioCamposOcultos, .formularioCamposOcultos input {
     display: none;
 }

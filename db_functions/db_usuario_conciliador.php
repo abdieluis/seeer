@@ -28,4 +28,15 @@ function obtenerConciliadorCiudad($dbConnect, $idCiudad){
     return $respuesta;
 }
 
+function obtenerConciliador($dbConnect, $campo, $valor){
+    $fila = array();
+    $query = 'SELECT * FROM usuario_conciliador WHERE '.$campo.' = ?';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('s', $valor);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $fila = $resultado->fetch_assoc();
+    return $fila;
+}
+
 ?>

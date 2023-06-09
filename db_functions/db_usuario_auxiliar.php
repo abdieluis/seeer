@@ -15,17 +15,18 @@ function registrarUsuarioAuxiliar($dbConnect, $nombres, $apellidos, $ciudad, $id
     return array(array($stmt->execute()), $stmt->insert_id);
 }
 
-function obtenerAuxiliarCiudad($dbConnect, $campo, $valor){
+function obtenerUsuariosAuxiliares($dbConnect, $campo, $valor){
     $respuesta = array();
-    $query = 'SELECT * FROM usuario_auxiliar WHERE '.$campo.' = ? ORDER BY idUsuarioAuxiliar'; 
+    $query = 'SELECT idUsuarioAuxiliar, nombres, apellidos, idUsuarioConciliador FROM usuario_auxiliar WHERE '.$campo.' = ?';
     $stmt = $dbConnect->prepare($query);
-    $stmt->bind_param('s', $valor);
+    $stmt->bind_param('s', $valor); 
     $stmt->execute();
     $resultado = $stmt->get_result();
     while ($fila = $resultado->fetch_assoc()) {
         array_push($respuesta, $fila);
     }
     return $respuesta;
+
 }
 
 ?>

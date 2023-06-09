@@ -49,8 +49,6 @@ function mostrarRatificaciones($dbConnect){
 }
 
 function obtenerLaUltimaRatificacionCreada($dbConnect){
-    $respuesta = array();
-    $query = 'SELECT * FROM ciudad';
     $fila = array();
     $query = 'SELECT * FROM ratificacion WHERE fechaCreacion >= CURDATE() ORDER BY idRatificacion DESC LIMIT 1';
     $stmt = $dbConnect->prepare($query);
@@ -60,13 +58,107 @@ function obtenerLaUltimaRatificacionCreada($dbConnect){
     return $fila;
 }
 
-function insertarRatificacionAuxiliar($dbConnect, $idUsuarioAuxiliar, $idRatificacion){
-    $query = 'UPDATE ratificacion SET idUsuarioAuxiliar = ? WHERE idRatificacion = ?';
+// function insertarRatificacionAuxiliar($dbConnect, $idUsuario, $idRatificacion){
+//     $query = 'UPDATE ratificacion SET idUsuario = ? WHERE idRatificacion = ?';
+//     $stmt = $dbConnect->prepare($query);
+//     $stmt->bind_param('ii', $idUsuario, $idRatificacion);
+//     return array($stmt->execute());
+// }
+
+function insertarRatificacionAuxiliar($dbConnect, $idUsuario, $idRatificacion){
+    $query = 'UPDATE ratificacion SET idUsuario = ? WHERE idRatificacion = ?';
     $stmt = $dbConnect->prepare($query);
-    $stmt->bind_param('ii', $idUsuarioAuxiliar, $idRatificacion);
+    $stmt->bind_param('ii', $idUsuario, $idRatificacion);
     return array($stmt->execute());
 }
 
 
+function obtenerRatificacionesCreadas($dbConnect){
+    $respuesta = array();
+    $query = 'SELECT COUNT(*) AS total_ratificaciones FROM ratificacion';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    while ($fila = $resultado->fetch_assoc()) {
+        array_push($respuesta, $fila);
+    }
+
+    return $respuesta;
+}
+
+function obtenerRatificacionesAsignadasUsuario($dbConnect, $campo, $valor){
+    $fila = array();
+    $query = 'SELECT COUNT(*) AS total_ratificaciones FROM ratificacion WHERE '.$campo.' = ? AND ratificado = 0';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('s', $valor);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $fila = $resultado->fetch_assoc();
+    return $fila;
+}
+
+function obtenerRatificacionesCompletas($dbConnect, $campo, $valor){
+    $fila = array();
+    $query = 'SELECT COUNT(*) AS total_ratificaciones FROM ratificacion WHERE '.$campo.' = ? AND ratificado = 1';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('s', $valor);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $fila = $resultado->fetch_assoc();
+    return $fila;
+}
+
+function obtenerUsuarioConUltimaRatificacion($dbConnect){
+    $fila = array();
+    $query = 'SELECT MAX(idUsuario) AS ultimoUsuario FROM ratificacion';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $fila = $resultado->fetch_assoc();
+    return $fila;
+}
+
+function obtenerRatificacionesSinAsignar($dbConnect){
+    $respuesta = array();
+    $query = 'SELECT idRatificacion, nombreTrabajador, apellidosTrabajador, razonSocialEmpresa, nombreComercial, nombrePatron 
+    FROM ratificacion 
+    WHERE idUsuario IS NULL';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    while ($fila = $resultado->fetch_assoc()) {
+        array_push($respuesta, $fila);
+    }
+
+    return $respuesta;
+}
+
+function obtenerRatificacionesAsignadasAuxiliar($dbConnect, $idUsuario){
+    $respuesta = array();
+    $query = 'SELECT idRatificacion, idUsuario, fechaCreacion, CONCAT(nombreTrabajador, " ", apellidosTrabajador) as nombreCompletoTrabajador, nombrePatron, nombreComercial, ratificado  
+    FROM ratificacion 
+    WHERE idUsuario = ?';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('i', $idUsuario); 
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    while ($fila = $resultado->fetch_assoc()) {
+        array_push($respuesta, $fila);
+    }
+    return $respuesta;
+}
+
+function datosRatificacion($dbConnect, $campo, $valor){
+    $fila = array();
+    $query = 'SELECT * FROM ratificacion WHERE '.$campo.' = ?';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('s', $valor);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $fila = $resultado->fetch_assoc();
+    return $fila;
+}
 
 ?>

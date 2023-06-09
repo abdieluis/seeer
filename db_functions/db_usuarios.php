@@ -134,4 +134,53 @@ function actualizarDatosUsuario($dbConnect, $nombres, $apellidos, $usuario, $tip
     return array($stmt->execute());
 }
 
+function obtenerUsuariosAuxiliaresCiudad($dbConnect, $idCiudad, $idTipoUsuario){
+    $respuesta = array();
+    $query = 'SELECT idUsuario FROM usuarios WHERE idCiudad = ? AND idTipoUsuario = ?';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('ii', $idCiudad, $idTipoUsuario); 
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    while ($fila = $resultado->fetch_assoc()) {
+        array_push($respuesta, $fila);
+    }
+    return $respuesta;
+}
+
+function obtenerUsuariosConRatificacion($dbConnect){
+    $respuesta = array();
+    $query = 'SELECT a.idUsuario 
+    FROM usuarios AS a 
+    INNER JOIN ratificacion AS r ON a.idUsuario = r.idUsuario 
+    WHERE r.idUsuario IS NOT NULL;';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    while ($fila = $resultado->fetch_assoc()) {
+        array_push($respuesta, $fila);
+    }
+
+    return $respuesta;
+}
+
+function obtenerUsuariosSinRatificacion($dbConnect, $idCiudad, $idTipoUsuario){
+    $respuesta = array();
+    $query = 'SELECT a.idUsuario 
+    FROM usuarios a 
+    LEFT JOIN ratificacion r ON a.idUsuario = r.idUsuario 
+    WHERE r.idUsuario IS NULL 
+    AND idCiudad = ? 
+    AND idTipoUsuario = ? 
+    ORDER BY idUsuario';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('ii', $idCiudad, $idTipoUsuario); 
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    while ($fila = $resultado->fetch_assoc()) {
+        array_push($respuesta, $fila);
+    }
+    return $respuesta;
+}
+
 ?>

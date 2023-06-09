@@ -25,8 +25,8 @@ if(!empty($resultadoMostrarDatosUsuarios)){
 
     $objetoRespuesta['usuarioSeeer'] = $resultadoMostrarDatosUsuarios;
 
-    $codigo = "fallo";
 } else {
+    $codigo = "fallo";
     $mensaje = "No hay datos del usuario";
     $objetoRespuesta = "";
 }

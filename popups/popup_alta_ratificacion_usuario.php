@@ -252,7 +252,7 @@
                         <div class="col-md-6">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1"><i class='bx bx-home'></i></span>
-                                <input type="text" class="form-control" placeholder="Número Exterior Empresa" aria-label="Número Exterior" aria-describedby="basic-addon1" name="numeroExteriorEmpresaAlta" id="numeroExteriorEmpresaAlta">
+                                <input type="text" class="form-control" placeholder="Número Exterior Empresa" aria-label="Número Exterior" aria-describedby="basic-addon1" name="numeroExteriorEmpresaAlta" id="numeroExteriorEmpresaAlta" maxlength="10" onKeypress="return soloNumeros(event);">
                             </div>
                         </div>
                         <div class="col-md-6 ms-auto">
@@ -271,7 +271,7 @@
                         <div class="col-md-6 ms-auto">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1"><i class='bx bx-map-pin'></i></span>
-                                <input type="text" class="form-control" placeholder="Código Postal Empresa" aria-label="Código Postal Empresa" aria-describedby="basic-addon1" name="cpEmpresaAlta" id="cpEmpresaAlta">
+                                <input type="text" class="form-control" placeholder="Código Postal Empresa" aria-label="Código Postal Empresa" aria-describedby="basic-addon1" name="cpEmpresaAlta" id="cpEmpresaAlta" maxlength="5" onKeypress="return soloNumeros(event);">
                             </div>
                         </div>
 
@@ -368,17 +368,59 @@
     </form>
 </div>
 <script>
-//   // FUNCION LIMPIAR CAMPOS =====================================================
-//   function limpiarCampos(){
-//     $("#nombresSolicitanteAlta").val("");
-//     $("#apellidosSolicitanteAlta").val("");
-//     $("#generoSolicitanteAlta").val(-1);
-//     $("#edadSolicitanteAlta").val("");
-//     $("#nroIdentificacionSolicitanteAlta").val("");
-//     $("#telefonoSolicitanteAlta").val("");
-//     $("#ciudadSolicitanteAlta").val(-1);
-//   }
-//   // ============================================================================
+// FUNCION LIMPIAR CAMPOS =====================================================
+function limpiarCamposRatificacion(){
+
+    $("#fechaInicioLaboralTrabajadorAlta").val("");
+    $("#fechaFinLaboralTrabajadorAlta").val("");
+    $("#nombresTrabajadorAlta").val("");
+    $("#apellidosTrabajadorAlta").val("");
+    $("#generoTrabajadorAlta").val("-1");
+    $("#edadTrabajadorAlta").val("");
+    $("#puestoDesempeñadoTrabajadorAlta").val("");
+    $("#calleTrabajadorAlta").val("");
+    $("#numeroExteriorTrabajadorAlta").val("");
+    $("#numeroInteriorTrabajadorAlta").val("");
+
+    $("#coloniaTrabajadorAlta").val("");
+    $("#codigoPostalTrabajadorAlta").val("");
+    $("#curpTrabajadorAlta").val("");
+    $("#rfcTrabajadorAlta").val("");
+    $("#nssTrabajadorAlta").val("");
+    $("#tipoIdentificacionTrabajadorAlta").val("-1");
+    $("#numeroIdentificacionTrabajadorAlta").val("");
+    $("#emailTrabajadorAlta").val("");
+
+    $("#telefonoTrabajadorAlta").val("");
+    $("#sueldoTrabajadorAlta").val("");
+    $("#tipoSueldoTrabajadorAlta").val("-1");
+    $("#horarioInicioTrabajadorAlta").val("");
+    $("#horarioFinTrabajadorAlta").val("");
+    $("#horasLaboradasTrabajadorAlta").val("");
+    $("#razonSocialEmpresaAlta").val("");
+    $("#nombreComercialEmpresaAlta").val("");
+    $("#nombrePatronEmpresaAlta").val("");
+    $("#dedicaEmpresaAlta").val("");
+
+    $("#curpRfcEmpresaAlta").val("");
+    $("#calleEmpresaAlta").val("");
+    $("#numeroExteriorEmpresaAlta").val("");
+    $("#numeroIneriorEmpresaAlta").val("");
+    $("#coloniaEmpresaAlta").val("");
+    $("#cpEmpresaAlta").val("");
+    $("#telefonoEmpresaAlta").val("");
+    $("#cuantificacionAlta").val("");
+    $("#emailEmpresaAlta").val("");
+
+    $("#estadoTrabajadorAlta").val("-1");
+    $("#municipioTrabajadorAlta").val("-1");
+
+    $("#estadoEmpresaAlta").val("-1");
+    $("#municipioEmpresaAlta").val("-1");
+
+    $("#ciudadRatificacionAlta option:selected").val("-1");
+}
+// ============================================================================
 
 //FUNCION CLIC CARGAR ARCHIVO=========================================================================
 function clickCargarArchivoCuantificacion(){
@@ -543,7 +585,7 @@ function cambioArchivoCuantificacion(){
                 }
                 else if(respuesta["codigo"] == "exito"){
                     var resultados = respuesta["objetoRespuesta"]["municipios"];
-                    var opcionesMunicipios = "<option value='-1'>Municipio del trabajador</option>";
+                    var opcionesMunicipios = "<option value='-1'>Municipio de la Empresa</option>";
                     for (i = 0; i < resultados.length; i++) {
                         var resultadosTotales = resultados[i];
                         // console.log(resultadosTotales);
@@ -677,293 +719,293 @@ function cambioArchivoCuantificacion(){
 
         var ciudadRatificacion                 = $("#ciudadRatificacionAlta option:selected").val();
 
-        // CONDICIONES PARA HACER OBLIGATORIOS LOS INPUT ==================================
-        if (fechaInicioLaboralTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Seleccione la fecha de inicio de labores.");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (fechaFinLaboralTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Seleccione la fecha de termino de labores.");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (nombresTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("El nombre del trabajador(a) no puede ir vacio.");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (apellidosTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Los apellidos del trabajador(a) no pueden ir vacios.");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (generoTrabajadorAlta == "-1") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Selecciona el genero del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (edadTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa la edad del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (puestoDesempeñadoTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa el puesto desempeñado del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (calleTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa la calle del domicilio del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (numeroExteriorTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa el numero exterior del domicilio del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        // if (numeroInteriorTrabajadorAlta == "") {
+        // // CONDICIONES PARA HACER OBLIGATORIOS LOS INPUT ==================================
+        // if (fechaInicioLaboralTrabajadorAlta == "") {
         //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-        //     $(".textoMensaje").text(".");
+        //     $(".textoMensaje").text("Seleccione la fecha de inicio de labores.");
         //     $("#msj").modal("toggle");
         //     return false;
         // }
 
-        if (coloniaTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa la colonia del domicilio del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (codigoPostalTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa el codigo postal del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (estadoTrabajadorAltaSelect == "-1") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Selecciona el estado del domicilio del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (municipioTrabajadorAltaSelect == "-1") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Selecciona el municipio del domicilio del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (curpTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa la curp del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (rfcTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa el rfc del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        if (nssTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa el numero del seguro social del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        // if (tipoIdentificacionTrabajadorAlta == "-1") {
+        // if (fechaFinLaboralTrabajadorAlta == "") {
         //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-        //     $(".textoMensaje").text("Selecciona el tipo de identificacion del trabajador(a).");
+        //     $(".textoMensaje").text("Seleccione la fecha de termino de labores.");
         //     $("#msj").modal("toggle");
         //     return false;
         // }
 
-        // if (numeroIdentificacionTrabajadorAlta == "") {
+        // if (nombresTrabajadorAlta == "") {
         //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-        //     $(".textoMensaje").text(".");
+        //     $(".textoMensaje").text("El nombre del trabajador(a) no puede ir vacio.");
         //     $("#msj").modal("toggle");
         //     return false;
         // }
 
-        if (emailTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa el email del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (apellidosTrabajadorAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Los apellidos del trabajador(a) no pueden ir vacios.");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
-        if (telefonoTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa el telefono del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (generoTrabajadorAlta == "-1") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Selecciona el genero del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
-        if (sueldoTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa el sueldo del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (edadTrabajadorAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa la edad del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
-        if (tipoSueldoTrabajadorAlta == "-1") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Selecciona la opcion del sueldo del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (puestoDesempeñadoTrabajadorAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa el puesto desempeñado del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
-        if (horarioInicioTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa el horario de entrada del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (calleTrabajadorAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa la calle del domicilio del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
-        if (horarioFinTrabajadorAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa la hora de salida del trabajador(a).");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (numeroExteriorTrabajadorAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa el numero exterior del domicilio del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
-        // if (horasLaboradasTrabajadorAlta == "") {
+        // // if (numeroInteriorTrabajadorAlta == "") {
+        // //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        // //     $(".textoMensaje").text(".");
+        // //     $("#msj").modal("toggle");
+        // //     return false;
+        // // }
+
+        // if (coloniaTrabajadorAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa la colonia del domicilio del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
+
+        // if (codigoPostalTrabajadorAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa el codigo postal del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
+
+        // if (estadoTrabajadorAltaSelect == "-1") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Selecciona el estado del domicilio del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
+
+        // if (municipioTrabajadorAltaSelect == "-1") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Selecciona el municipio del domicilio del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
+
+        // if (curpTrabajadorAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa la curp del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
+
+        // if (rfcTrabajadorAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa el rfc del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
+
+        // if (nssTrabajadorAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa el numero del seguro social del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
+
+        // // if (tipoIdentificacionTrabajadorAlta == "-1") {
+        // //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        // //     $(".textoMensaje").text("Selecciona el tipo de identificacion del trabajador(a).");
+        // //     $("#msj").modal("toggle");
+        // //     return false;
+        // // }
+
+        // // if (numeroIdentificacionTrabajadorAlta == "") {
+        // //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        // //     $(".textoMensaje").text(".");
+        // //     $("#msj").modal("toggle");
+        // //     return false;
+        // // }
+
+        // if (emailTrabajadorAlta == "") {
         //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
         //     $(".textoMensaje").text("Ingresa el email del trabajador(a).");
         //     $("#msj").modal("toggle");
         //     return false;
         // }
 
-        if ((razonSocialEmpresaAlta == "") && (nombreComercialEmpresaAlta == "") && (nombrePatronEmpresaAlta == "")) {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa la razon social o el nombre comercial o el nombre del patron.");
-            $("#msj").modal("toggle");
-            return false;
-        }
-
-        // if (nombreComercialEmpresaAlta == "") {
+        // if (telefonoTrabajadorAlta == "") {
         //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-        //     $(".textoMensaje").text("Ingresa el email del trabajador(a).");
+        //     $(".textoMensaje").text("Ingresa el telefono del trabajador(a).");
         //     $("#msj").modal("toggle");
         //     return false;
         // }
 
-        // if (nombrePatronEmpresaAlta == "") {
+        // if (sueldoTrabajadorAlta == "") {
         //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-        //     $(".textoMensaje").text("Ingresa el email del trabajador(a).");
+        //     $(".textoMensaje").text("Ingresa el sueldo del trabajador(a).");
         //     $("#msj").modal("toggle");
         //     return false;
         // }
 
-        if (dedicaEmpresaAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa  a que se dedica la empresa o establecimiento.");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (tipoSueldoTrabajadorAlta == "-1") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Selecciona la opcion del sueldo del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
-        if (curpRfcEmpresaAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa la curp o el rfc de la empresa.");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (horarioInicioTrabajadorAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa el horario de entrada del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
-        if (calleEmpresaAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa la calle del domicilio de la empresa.");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (horarioFinTrabajadorAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa la hora de salida del trabajador(a).");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
-        if (numeroExteriorEmpresaAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa el numero exterior del domicilio de la empresa.");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // // if (horasLaboradasTrabajadorAlta == "") {
+        // //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        // //     $(".textoMensaje").text("Ingresa el email del trabajador(a).");
+        // //     $("#msj").modal("toggle");
+        // //     return false;
+        // // }
 
-        // if (numeroIneriorEmpresaAlta == "") {
+        // if ((razonSocialEmpresaAlta == "") && (nombreComercialEmpresaAlta == "") && (nombrePatronEmpresaAlta == "")) {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa la razon social o el nombre comercial o el nombre del patron.");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
+
+        // // if (nombreComercialEmpresaAlta == "") {
+        // //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        // //     $(".textoMensaje").text("Ingresa el email del trabajador(a).");
+        // //     $("#msj").modal("toggle");
+        // //     return false;
+        // // }
+
+        // // if (nombrePatronEmpresaAlta == "") {
+        // //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        // //     $(".textoMensaje").text("Ingresa el email del trabajador(a).");
+        // //     $("#msj").modal("toggle");
+        // //     return false;
+        // // }
+
+        // if (dedicaEmpresaAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa  a que se dedica la empresa o establecimiento.");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
+
+        // if (curpRfcEmpresaAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa la curp o el rfc de la empresa.");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
+
+        // if (calleEmpresaAlta == "") {
         //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
         //     $(".textoMensaje").text("Ingresa la calle del domicilio de la empresa.");
         //     $("#msj").modal("toggle");
         //     return false;
         // }
 
-        if (coloniaEmpresaAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa la colonia del domicilio de la empresa.");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (numeroExteriorEmpresaAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa el numero exterior del domicilio de la empresa.");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
-        if (cpEmpresaAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa el codigo postal de la empresa.");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // // if (numeroIneriorEmpresaAlta == "") {
+        // //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        // //     $(".textoMensaje").text("Ingresa la calle del domicilio de la empresa.");
+        // //     $("#msj").modal("toggle");
+        // //     return false;
+        // // }
 
-        if (municipioEmpresaAltaSelect == "-1") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Selecciona el estado del domicilio de la empresa.");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (coloniaEmpresaAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa la colonia del domicilio de la empresa.");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
-        if (municipioEmpresaAltaSelect == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Selecciona el municipio del domicilio de la empresa.");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (cpEmpresaAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa el codigo postal de la empresa.");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
-        if (telefonoEmpresaAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa el telefono de la empresa.");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (municipioEmpresaAltaSelect == "-1") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Selecciona el estado del domicilio de la empresa.");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
-        if (cuantificacionAlta == "") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Ingresa el archivo de la cuatificación de la empresa.");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (municipioEmpresaAltaSelect == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Selecciona el municipio del domicilio de la empresa.");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
+
+        // if (telefonoEmpresaAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa el telefono de la empresa.");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
+
+        // if (cuantificacionAlta == "") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Ingresa el archivo de la cuatificación de la empresa.");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
         
-        if (ciudadRatificacion == "-1") {
-            $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
-            $(".textoMensaje").text("Selecciona la ciudad en donde se realizará la ratificación.");
-            $("#msj").modal("toggle");
-            return false;
-        }
+        // if (ciudadRatificacion == "-1") {
+        //     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+        //     $(".textoMensaje").text("Selecciona la ciudad en donde se realizará la ratificación.");
+        //     $("#msj").modal("toggle");
+        //     return false;
+        // }
 
         // ================================================================================
 
@@ -1023,7 +1065,7 @@ function cambioArchivoCuantificacion(){
         var formData = new FormData(document.getElementById("formRatificacionesUsuarioPublicoAlta"));
         showMessageOverlay("CREANDO...", "images/cargando.gif", "200", "200", "sending");
         $.ajax({
-            url: "backend/backend_asignar_ratificacion_auxiliar.php",
+            url: "backend/backend_registrar_ratificacion.php",
             type: "POST",
             dataType: "html",
             data: formData,
@@ -1042,6 +1084,7 @@ function cambioArchivoCuantificacion(){
                         $(".textoMensaje").text(resultado["mensaje"]);
                     }
                     $("#msj").modal("toggle");
+                    $(".btnCancelarRatificacionUsuario").click();
                     closeMessageOverlay();
                 }
                 else if(resultado["codigo"] == "exito"){
@@ -1049,6 +1092,7 @@ function cambioArchivoCuantificacion(){
                     $(".iconoMensaje").html("<i class='bx bx-check-circle bx-tada bx-lg' style='color:#0ea202' ></i>");
                     $(".textoMensaje").text(resultado["mensaje"]);
                     $("#msj").modal("toggle");
+                    limpiarCamposRatificacion();
                     closeMessageOverlay();
                 }
             }
