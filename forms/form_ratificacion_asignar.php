@@ -5,20 +5,27 @@
     require_once("../global/header.php");
     $tipoUsuario = $_SESSION['idTipoUsuario'];
     $idUsuario   = $_SESSION['idUsuario'];
-    $idCiudad   = $_SESSION['idCiudad'];
+    $idCiudad    = $_SESSION['idCiudad'];
 ?>
 			<div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-                <center> <h1> <i class='bx bxs-file'></i> Asignar Ratificación</h1> </center>
-				<div class="container-fluid">
+                <center> <h1> <i class='bx bxs-file'></i> Ratificaciónes</h1> </center>
+                <br><br>
+                <center>
+                    <div class="col-sm-3 btnAlta">
+                        <button type="button" class="col-sm-6" onclick="mostrarRatificacionesSinAsignar();"><i class='bx bxs-user-check'></i> Asignar</button>
+                        <button type="button" class="col-sm-6" onclick="abrirPopupGenerarRatificacionRecepcion(<?=$idCiudad?>);"><i class='bx bx-plus-circle'></i> Crear</button>
+                    </div>
+                </center>
+                
+				<div class="container-fluid formRatificacionAsignar" hidden>
                     <div class="row">
-                        <center><div class="col-md-12" style="font-weight: bold;">DATOS DEL USUARIO</div></center>
-                        <br><br>
-
                         <div class="row g-3">
                             <div class="col-sm-5">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1"><i class='bx bxs-file'></i></span>
-                                    <select class="form-select selectRatificaciones" id="ratificacionesSinAsignar" onchange="mostrarAuxiliaresDisponibles();"></select>
+                                    <select class="form-select selectRatificaciones" id="ratificacionesSinAsignar" onchange="mostrarAuxiliaresDisponibles();">
+                                        <option value="-1">Selecciona La Ratificación</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm">
@@ -92,6 +99,7 @@ function mostrarAuxiliaresDisponibles() {
 
 // FUNCION TRAER RATIFICACIONES QUE NO HAN SIDO ASIGNADAS AUN ========================================
 function mostrarRatificacionesSinAsignar() {
+
     showMessageOverlay("CARGANDO...", "../images/cargando.gif", "200", "200", "sending");
     $.ajax({
         method:"POST",
@@ -110,23 +118,33 @@ function mostrarRatificacionesSinAsignar() {
                 var resultados = respuesta["objetoRespuesta"]["ratificaciones"];
                 // console.log(resultados);
 
-                var opcionesRatificacion = "<option value='-1'>Selecciona La Ratificación</option>";
-
-                for (i = 0; i < resultados.length; i++) {
-                    var resultadosTotales = resultados[i];
-
-                    var apellidosTrabajador = resultadosTotales["apellidosTrabajador"];
-                    var idRatificacion = resultadosTotales["idRatificacion"];
-                    var nombreComercial = resultadosTotales["nombreComercial"];
-                    var nombrePatron = resultadosTotales["nombrePatron"];
-                    var nombreTrabajador = resultadosTotales["nombreTrabajador"];
-                    var razonSocialEmpresa = resultadosTotales["razonSocialEmpresa"];
-
-                    opcionesRatificacion += "<option value='"+idRatificacion+"'>Ratificación "+nombreTrabajador+" "+apellidosTrabajador+"</option>";
+                if (resultados == undefined) {
+                    $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+                    $(".textoMensaje").text("No hay ratificaciones para asignar.");
+                    $("#msj").modal("toggle");
                 }
+                else{
+                    $(".formRatificacionAsignar").prop('hidden', false);
+                    var opcionesRatificacion = "<option value='-1'>Selecciona La Ratificación</option>";
 
-                $(".selectRatificaciones").html(opcionesRatificacion);
+                    for (i = 0; i < resultados.length; i++) {
+                        var resultadosTotales = resultados[i];
+
+                        var apellidosTrabajador = resultadosTotales["apellidosTrabajador"];
+                        var idRatificacion = resultadosTotales["idRatificacion"];
+                        var nombreComercial = resultadosTotales["nombreComercial"];
+                        var nombrePatron = resultadosTotales["nombrePatron"];
+                        var nombreTrabajador = resultadosTotales["nombreTrabajador"];
+                        var razonSocialEmpresa = resultadosTotales["razonSocialEmpresa"];
+
+                        opcionesRatificacion += "<option value='"+idRatificacion+"'>Ratificación "+nombreTrabajador+" "+apellidosTrabajador+"</option>";
+                    }
+
+                    $(".selectRatificaciones").html(opcionesRatificacion);
+                    
+                }
                 closeMessageOverlay();
+                
             }
         }
     });
@@ -223,11 +241,11 @@ function asignarRatificacionUsuarioAuxiliar(){
 }
 // ======================================================================================
 
-// EVENTO READY ======================================================================================
-$(document).ready(function () {
-    mostrarRatificacionesSinAsignar();
-});
-// ===================================================================================================
+// // EVENTO READY ======================================================================================
+// $(document).ready(function () {
+//     mostrarRatificacionesSinAsignar();
+// });
+// // ===================================================================================================
 </script>
 <?php
 require_once("../global/footer.php");

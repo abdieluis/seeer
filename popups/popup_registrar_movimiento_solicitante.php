@@ -19,7 +19,6 @@
                     <option value="-1">Selecciona Movimiento</option>
                     <option value="0">Solicitud</option>
                     <option value="1">Audiencia</option>
-                    <option value="2">Ratificación</option>
                   </select>
                 </div>
               </div>
@@ -107,8 +106,8 @@
 
             "<div class='col-md-6'>"+
               "<div class='input-group mb-3'>"+
-                "<span class='input-group-text' id='basic-addon1'><i class='bx bxs-user-check'></i></span>"+
-                "<input type='text' class='form-control' placeholder='Auxiliar Asignado' aria-label='Auxiliar Asignado' aria-describedby='basic-addon1' name='auxiliarAsignadoRegistroMovimiento' id='auxiliarAsignadoRegistroMovimiento'>"+
+                "<label class='input-group-text' for='auxiliarAsignadoRegistroMovimiento'><i class='bx bx-map'></i></label>"+
+                "<select class='form-select opcionesAuxiliarMovimientos' id='auxiliarAsignadoRegistroMovimiento'></select>"+
               "</div>"+
             "</div>"+
             "<div class='col-md-6 ms-auto'>"+
@@ -152,6 +151,7 @@
             $(".formsMovimientosSolicitante").html(htmlFormularioSolicitudes);
 
             $("#generoSolicitanteRegistroMovimiento option[value='"+generoSolicitante+"'").attr("selected",true);
+            mostrarUsuarioAuxiliar();
           }
           else if (movimiento == 1) {
             $(".formsMovimientosSolicitante").html("");
@@ -286,12 +286,12 @@
               }
             });
           }
-          else if (movimiento == 2) {
+          // else if (movimiento == 2) {
 
-            $(".formsMovimientosSolicitante").html("");
-            $("#selectFechaSolicitud").val("-1");
-            $(".fechaSolicitud").html("");
-          }
+          //   $(".formsMovimientosSolicitante").html("");
+          //   $("#selectFechaSolicitud").val("-1");
+          //   $(".fechaSolicitud").html("");
+          // }
 
 
           closeMessageOverlay();
@@ -311,6 +311,51 @@
     $("#registroMovimientoSolicitante").modal("toggle");
   }
   // ============================================================================
+
+  // FUNCION ABRIR POPUP ========================================================
+  function mostrarUsuarioAuxiliar(){
+
+    var jsonData = {
+      "idCiudad": idCiudadSesion
+    }
+
+    showMessageOverlay("CARGANDO...", "../images/cargando.gif", "200", "200", "sending");
+    $.ajax({
+    method:"POST",
+    url:"../backend/backend_mostrar_usuario_auxiliar.php",
+    data: jsonData,
+        success:function(data){
+            var respuesta = JSON.parse(data);
+
+            if(respuesta["codigo"] == "fallo"){
+                $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
+                $(".textoMensaje").text(respuesta["mensaje"]);
+                $("#msj").modal("toggle");
+                closeMessageOverlay();
+            }
+            else if(respuesta["codigo"] == "exito"){
+                var resultados = respuesta["objetoRespuesta"]["usuario_auxiliar"];
+
+                var opcionesAuxiliar = "<option value='-1'>Usuario Auxiliar</option>";
+
+                for (i = 0; i < resultados.length; i++) {
+                    var resultadosTotales = resultados[i];
+                    var idUsuarioAuxiliar = resultadosTotales["idUsuarioAuxiliar"];
+                    var nombres           = resultadosTotales["nombres"];
+                    var apellidos         = resultadosTotales["apellidos"];
+
+                    opcionesAuxiliar += "<option value='"+idUsuarioAuxiliar+"'>"+nombres+" "+apellidos+"</option>";
+                }
+
+                $(".opcionesAuxiliarMovimientos").html(opcionesAuxiliar);
+
+                closeMessageOverlay();
+            }
+        }
+    });
+  }
+  // ============================================================================
+
 
   // FUNCION MOVIMIENTOS SOLICITANTES ===========================================
   function altaMovimientosSolicitante() {

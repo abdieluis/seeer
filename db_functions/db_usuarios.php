@@ -24,11 +24,11 @@ function inciarSesionUsuario($dbConnect, $campo, $valor, $contrasena){
     return $fila;
 }
 
-function registrarUsuario($dbConnect, $nombres, $apellidos, $usuario, $password, $tipo, $ciudad){
-    $query = 'INSERT INTO usuarios (nombres, apellidos, usuario, password, idTipoUsuario, idCiudad)
-    VALUES (?,?,?,?,?,?)';
+function registrarUsuario($dbConnect, $nombres, $apellidos, $usuario, $password, $tipo, $ciudad, $fechaAlta){
+    $query = 'INSERT INTO usuarios (nombres, apellidos, usuario, password, idTipoUsuario, idCiudad, fechaAlta)
+    VALUES (?,?,?,?,?,?,?)';
     $stmt = $dbConnect->prepare($query);
-    $stmt->bind_param('ssssii', $nombres, $apellidos, $usuario, $password, $tipo, $ciudad);
+    $stmt->bind_param('ssssiis', $nombres, $apellidos, $usuario, $password, $tipo, $ciudad, $fechaAlta);
     
     return array(array($stmt->execute()), $stmt->insert_id);
 }
@@ -181,6 +181,16 @@ function obtenerUsuariosSinRatificacion($dbConnect, $idCiudad, $idTipoUsuario){
         array_push($respuesta, $fila);
     }
     return $respuesta;
+}
+
+function obtenerUltimoUsuarioCredo($dbConnect){
+    $fila = array();
+    $query = 'SELECT * FROM usuarios ORDER BY fechaAlta DESC LIMIT 1';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $fila = $resultado->fetch_assoc();
+    return $fila;
 }
 
 ?>

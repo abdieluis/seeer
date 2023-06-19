@@ -6,11 +6,11 @@ registrarUsuarioRecepcion($dbConnect, $nombres, $apellidos, $ciudad)
 ************************************************************************************************************************
 */
 
-function registrarUsuarioRecepcion($dbConnect, $nombres, $apellidos, $ciudad){
-    $query = 'INSERT INTO usuario_recepcion (nombres, apellidos, idCiudad)
-    VALUES (?,?,?)';
+function registrarUsuarioRecepcion($dbConnect, $idUsuario, $nombres, $apellidos, $ciudad){
+    $query = 'INSERT INTO usuario_recepcion ( idUsuarioRecepcion, nombres, apellidos, idCiudad)
+    VALUES (?,?,?,?)';
     $stmt = $dbConnect->prepare($query);
-    $stmt->bind_param('ssi', $nombres, $apellidos, $ciudad);
+    $stmt->bind_param('issi', $idUsuario, $nombres, $apellidos, $ciudad);
     
     return array(array($stmt->execute()), $stmt->insert_id);
 }

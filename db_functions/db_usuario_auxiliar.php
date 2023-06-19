@@ -6,11 +6,11 @@ registrarUsuarioAuxiliar($dbConnect, $nombres, $apellidos, $ciudad, $idUsuarioCo
 ************************************************************************************************************************
 */
 
-function registrarUsuarioAuxiliar($dbConnect, $nombres, $apellidos, $ciudad, $idUsuarioConciliador){
-    $query = 'INSERT INTO usuario_auxiliar (nombres, apellidos, idCiudad, idUsuarioConciliador)
-    VALUES (?,?,?,?)';
+function registrarUsuarioAuxiliar($dbConnect, $idUsuario, $nombres, $apellidos, $ciudad, $idUsuarioConciliador){
+    $query = 'INSERT INTO usuario_auxiliar (idUsuarioAuxiliar, nombres, apellidos, idCiudad, idUsuarioConciliador)
+    VALUES (?,?,?,?,?)';
     $stmt = $dbConnect->prepare($query);
-    $stmt->bind_param('ssii', $nombres, $apellidos, $ciudad, $idUsuarioConciliador);
+    $stmt->bind_param('issii', $idUsuario, $nombres, $apellidos, $ciudad, $idUsuarioConciliador);
     
     return array(array($stmt->execute()), $stmt->insert_id);
 }

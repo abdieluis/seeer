@@ -1,11 +1,12 @@
 <?php
-$title       = "SOLICITANTES | SEEER CONCILIADOR";
-$needSession = true;
-$home        = false;
+  $title       = "SOLICITANTES | SEEER CONCILIADOR";
+  $needSession = true;
+  $home        = false;
 
-require_once("../global/header.php");
-$tipoUsuario = $_SESSION['idTipoUsuario'];
-$idUsuario   = $_SESSION['idUsuario'];
+  require_once("../global/header.php");
+  $tipoUsuario = $_SESSION['idTipoUsuario'];
+  $idUsuario   = $_SESSION['idUsuario'];
+  $idCiudad    = $_SESSION['idCiudad'];
 ?>
 
       <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
@@ -73,6 +74,7 @@ $(document).ready(function () {
     $('#usuariosSolicitantes').DataTable();
     idUsuarioSolicitanteGlobal = "";
     idUsuarioSesion = <?=$idUsuario?>;
+    idCiudadSesion  = <?=$idCiudad?>;
 });
 // ===================================================================================================
 </script>

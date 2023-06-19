@@ -14,47 +14,51 @@ if(!isset($backendIncluido)){
     $objetoRespuesta      = array();
     $codigo               = '';
     $mensaje              = '';
-    $fechaOper            = date('Y-m-d');
+    $fechaAlta            = date('Y-m-d');
     $horaOper             = date('H:i:s');
 }
 
 // ===================================================================================================
 
-// DATOS PEDIDOS POR POST
-$nombres   = ucwords($_POST['nombres']);
-$apellidos = ucwords($_POST['apellidos']);
-$usuario   = $_POST['usuario'];
-$password  = $_POST['password'];
-$tipo      = $_POST['tipo'];
-$ciudad    = $_POST['ciudad'];
-
-if ($tipo == 2){ //tipo 2 es conciliador
-
-    // SE REGISTRA EN LA TABLA DEL TIPO DEL USUARIO CONCILIADOR
-    $resultadoUsuarioConciliadorRegistro  = registrarUsuarioConciliador($dbConnect, $nombres, $apellidos, $ciudad);
-    $arrayResultados                      = unirArrays($arrayResultados, $resultadoUsuarioConciliadorRegistro);
-}
-elseif ($tipo == 3){ // tipo 3 es auxiliar
-
-    $idUsuarioConciliador = $_POST['idUsuarioConciliador'];
-
-    // SE REGISTRA EN LA TABLA DEL TIPO DEL USUARIO AUXILIAR
-    $resultadoUsuarioAuxiliarRegistro  = registrarUsuarioAuxiliar($dbConnect, $nombres, $apellidos, $ciudad, $idUsuarioConciliador);
-    $arrayResultados                   = unirArrays($arrayResultados, $resultadoUsuarioAuxiliarRegistro);
-
-}
-elseif ($tipo == 4){ //tipo 4 es recepcion
-    // SE REGISTRA EN LA TABLA DEL TIPO DEL USUARIO RECEPCION
-    $resultadoUsuarioRecepcionRegistro = registrarUsuarioRecepcion($dbConnect, $nombres, $apellidos, $ciudad);
-    $arrayResultados                   = unirArrays($arrayResultados, $resultadoUsuarioRecepcionRegistro);
-}
-
-// SE REGISTRA AL USUARIO
-$resultadoUsuarioRegistro  = registrarUsuario($dbConnect, $nombres, $apellidos, $usuario, $password, $tipo, $ciudad);
-$arrayResultados           = unirArrays($arrayResultados, $resultadoUsuarioRegistro);
-
-
 if(!isset($backendIncluido)){
+
+    // DATOS PEDIDOS POR POST
+    $nombres   = ucwords($_POST['nombres']);
+    $apellidos = ucwords($_POST['apellidos']);
+    $usuario   = $_POST['usuario'];
+    $password  = $_POST['password'];
+    $tipo      = $_POST['tipo'];
+    $ciudad    = $_POST['ciudad'];
+
+    // SE REGISTRA AL USUARIO
+    $resultadoUsuarioRegistro  = registrarUsuario($dbConnect, $nombres, $apellidos, $usuario, $password, $tipo, $ciudad, $fechaAlta);
+    $arrayResultados           = unirArrays($arrayResultados, $resultadoUsuarioRegistro);
+
+    $resultadoMostrarUltimoUsuarioCreado = obtenerUltimoUsuarioCredo($dbConnect);
+    $idUsuario = $resultadoMostrarUltimoUsuarioCreado["idUsuario"];
+
+    if ($tipo == 2){ //tipo 2 es conciliador
+
+        // SE REGISTRA EN LA TABLA DEL TIPO DEL USUARIO CONCILIADOR
+        $resultadoUsuarioConciliadorRegistro  = registrarUsuarioConciliador($dbConnect, $idUsuario, $nombres, $apellidos, $ciudad);
+        $arrayResultados                      = unirArrays($arrayResultados, $resultadoUsuarioConciliadorRegistro);
+    }
+    elseif ($tipo == 3){ // tipo 3 es auxiliar
+
+        $idUsuarioConciliador = $_POST['idUsuarioConciliador'];
+
+        // SE REGISTRA EN LA TABLA DEL TIPO DEL USUARIO AUXILIAR
+        $resultadoUsuarioAuxiliarRegistro  = registrarUsuarioAuxiliar($dbConnect, $idUsuario, $nombres, $apellidos, $ciudad, $idUsuarioConciliador);
+        $arrayResultados                   = unirArrays($arrayResultados, $resultadoUsuarioAuxiliarRegistro);
+
+    }
+    elseif ($tipo == 4){ //tipo 4 es recepcion
+
+        // SE REGISTRA EN LA TABLA DEL TIPO DEL USUARIO RECEPCION
+        $resultadoUsuarioRecepcionRegistro = registrarUsuarioRecepcion($dbConnect, $idUsuario, $nombres, $apellidos, $ciudad);
+        $arrayResultados                   = unirArrays($arrayResultados, $resultadoUsuarioRecepcionRegistro);
+    }
+
     $ejecutarDb   = true;
     $respuesta    = committedRolledbackDb($dbConnect, $arrayResultados, $ejecutarDb, $objetoRespuesta, $mensaje);
     $codigo       = "exito";
@@ -64,6 +68,7 @@ if(!isset($backendIncluido)){
     $mensaje = "Error usuario no registrado";
     $objetoRespuesta = array();
 }
+
 
 //******************************************************************************************************
 if(!isset($backendIncluido))

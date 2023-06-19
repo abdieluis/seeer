@@ -6,12 +6,13 @@ INDICE FUNCIONES
 ************************************************************************************************************************
 */
 
-function registrarRatificacion($dbConnect, $fechaInicioLaboralTrabajador, $fechaFinLaboralTrabajador, $nombresTrabajador, $apellidosTrabajador, $generoTrabajador, 
-$edadTrabajador, $puestoDesempeñadoTrabajador, $calleTrabajador, $numeroExteriorTrabajador, $numeroInteriorTrabajador, $coloniaTrabajador, $codigoPostalTrabajador, $estadoTrabajador, 
-$municipioTrabajador, $curpTrabajador, $rfcTrabajador, $nssTrabajador, $tipoIdentificacionTrabajador, $numeroIdentificacionTrabajador, $emailTrabajador, $telefonoTrabajador, 
-$sueldoTrabajador, $tipoSueldoTrabajador, $horarioTrabajador, $horasLaboradasTrabajador, $razonSocialEmpresa, $nombreComercialEmpresa, $nombrePatronEmpresa, $dedicaEmpresa, 
-$curpRfcEmpresa, $calleEmpresa, $numeroExteriorEmpresa, $numeroIneriorEmpresa, $coloniaEmpresa, $cpEmpresa, $estadoEmpresa, $municipioEmpresa, $telefonoEmpresa, $emailEmpresa, 
-$propuestaCuatificacion, $fechaOper){
+function registrarRatificacion($dbConnect, $fechaInicioLaboralTrabajador, $fechaFinLaboralTrabajador, $nombresTrabajador, 
+$apellidosTrabajador, $generoTrabajador, $edadTrabajador, $puestoDesempeñadoTrabajador, $calleTrabajador, $numeroExteriorTrabajador, 
+$numeroInteriorTrabajador, $coloniaTrabajador, $codigoPostalTrabajador, $estadoTrabajador, $municipioTrabajador, $curpTrabajador, $rfcTrabajador, 
+$nssTrabajador, $tipoIdentificacionTrabajador, $numeroIdentificacionTrabajador, $emailTrabajador, $telefonoTrabajador, $sueldoTrabajador, 
+$tipoSueldoTrabajador, $horarioTrabajador, $horasLaboradasTrabajador, $razonSocialEmpresa, $nombreComercialEmpresa, $nombrePatronEmpresa, $dedicaEmpresa, 
+$curpRfcEmpresa, $calleEmpresa, $numeroExteriorEmpresa, $numeroIneriorEmpresa, $coloniaEmpresa, $cpEmpresa, $estadoEmpresa, $municipioEmpresa, 
+$telefonoEmpresa, $emailEmpresa, $cuantificacionDoc, $fechaOper){
     $query = 'INSERT INTO ratificacion (fechaInicioLabores, fechaTerminoLabores, nombreTrabajador, apellidosTrabajador, generoTrabajador, 
     edadTrabajador, puestoDesempeñado, calleTrabajador, numeroExteriorTrabajador, numeroInteriorTrabajador, coloniaTrabajador, cpTrabajador, estadoTrabajador, 
     municipio, curpTrabajador, rfcTrabajador, nssTrabajador, tipoIdentificacion, numeroIdentificaion, emailTrabajador, telefonoTrabajador, 
@@ -20,12 +21,39 @@ $propuestaCuatificacion, $fechaOper){
     telefonoEmpresaPatron, emailEmpresaPatron, cuantificacion, fechaCreacion)
     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
     $stmt = $dbConnect->prepare($query);
-    $stmt->bind_param('sssssssssssssssssssssssssssssssssssssssss', $fechaInicioLaboralTrabajador, $fechaFinLaboralTrabajador, $nombresTrabajador, $apellidosTrabajador, $generoTrabajador, 
-    $edadTrabajador, $puestoDesempeñadoTrabajador, $calleTrabajador, $numeroExteriorTrabajador, $numeroInteriorTrabajador, $coloniaTrabajador, $codigoPostalTrabajador, $estadoTrabajador, 
-    $municipioTrabajador, $curpTrabajador, $rfcTrabajador, $nssTrabajador, $tipoIdentificacionTrabajador, $numeroIdentificacionTrabajador, $emailTrabajador, $telefonoTrabajador, 
-    $sueldoTrabajador, $tipoSueldoTrabajador, $horarioTrabajador, $horasLaboradasTrabajador, $razonSocialEmpresa, $nombreComercialEmpresa, $nombrePatronEmpresa, $dedicaEmpresa, 
-    $curpRfcEmpresa, $calleEmpresa, $numeroExteriorEmpresa, $numeroIneriorEmpresa, $coloniaEmpresa, $cpEmpresa, $estadoEmpresa, $municipioEmpresa, $telefonoEmpresa, $emailEmpresa, 
-    $propuestaCuatificacion, $fechaOper);
+    $stmt->bind_param('sssssssssssssssssssssssssssssssssssssssss', $fechaInicioLaboralTrabajador, $fechaFinLaboralTrabajador, $nombresTrabajador, 
+    $apellidosTrabajador, $generoTrabajador, $edadTrabajador, $puestoDesempeñadoTrabajador, $calleTrabajador, $numeroExteriorTrabajador, 
+    $numeroInteriorTrabajador, $coloniaTrabajador, $codigoPostalTrabajador, $estadoTrabajador, $municipioTrabajador, $curpTrabajador, $rfcTrabajador, 
+    $nssTrabajador, $tipoIdentificacionTrabajador, $numeroIdentificacionTrabajador, $emailTrabajador, $telefonoTrabajador, $sueldoTrabajador, 
+    $tipoSueldoTrabajador, $horarioTrabajador, $horasLaboradasTrabajador, $razonSocialEmpresa, $nombreComercialEmpresa, $nombrePatronEmpresa, $dedicaEmpresa, 
+    $curpRfcEmpresa, $calleEmpresa, $numeroExteriorEmpresa, $numeroIneriorEmpresa, $coloniaEmpresa, $cpEmpresa, $estadoEmpresa, $municipioEmpresa, 
+    $telefonoEmpresa, $emailEmpresa, $cuantificacionDoc, $fechaOper);
+    
+    return array(array($stmt->execute()), $stmt->insert_id);
+}
+
+function registrarRatificacionRecepcion($dbConnect, $idUsuarioAuxiliar, $fechaInicioLaboralTrabajador, $fechaFinLaboralTrabajador, 
+$nombresTrabajador, $apellidosTrabajador, $generoTrabajador, $edadTrabajador, $puestoDesempeñadoTrabajador, $calleTrabajador, $numeroExteriorTrabajador, 
+$numeroInteriorTrabajador, $coloniaTrabajador, $codigoPostalTrabajador, $estadoTrabajador, $municipioTrabajador, $curpTrabajador, $rfcTrabajador, 
+$nssTrabajador, $tipoIdentificacionTrabajador, $numeroIdentificacionTrabajador, $emailTrabajador, $telefonoTrabajador, $sueldoTrabajador, 
+$tipoSueldoTrabajador, $horarioTrabajador, $horasLaboradasTrabajador, $razonSocialEmpresa, $nombreComercialEmpresa, $nombrePatronEmpresa, 
+$dedicaEmpresa, $curpRfcEmpresa, $calleEmpresa, $numeroExteriorEmpresa, $numeroIneriorEmpresa, $coloniaEmpresa, $cpEmpresa, $estadoEmpresa, 
+$municipioEmpresa, $telefonoEmpresa, $emailEmpresa, $cuantificacionDoc, $fechaOper){
+    $query = 'INSERT INTO ratificacion (idUsuario, fechaInicioLabores, fechaTerminoLabores, nombreTrabajador, apellidosTrabajador, generoTrabajador, 
+    edadTrabajador, puestoDesempeñado, calleTrabajador, numeroExteriorTrabajador, numeroInteriorTrabajador, coloniaTrabajador, cpTrabajador, estadoTrabajador, 
+    municipio, curpTrabajador, rfcTrabajador, nssTrabajador, tipoIdentificacion, numeroIdentificaion, emailTrabajador, telefonoTrabajador, 
+    sueldo, tipoSueldo, horarioLaboral, horasLaboradas, razonSocialEmpresa, nombreComercial, nombrePatron, giroEmpresa, 
+    curpRfcPatron, calleEmpresaPatron, numeroExteriorEmpresaPatron, numeroInteriorEmpresaPatron, coloniaEmpresaPatron, cpEmpresaPatron, estadoEmpresaPatron, municipioEmpresaPatron, 
+    telefonoEmpresaPatron, emailEmpresaPatron, cuantificacion, fechaCreacion)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('isssssssssssssssssssssssssssssssssssssssss', $idUsuarioAuxiliar, $fechaInicioLaboralTrabajador, $fechaFinLaboralTrabajador, 
+    $nombresTrabajador, $apellidosTrabajador, $generoTrabajador, $edadTrabajador, $puestoDesempeñadoTrabajador, $calleTrabajador, $numeroExteriorTrabajador, 
+    $numeroInteriorTrabajador, $coloniaTrabajador, $codigoPostalTrabajador, $estadoTrabajador, $municipioTrabajador, $curpTrabajador, $rfcTrabajador, 
+    $nssTrabajador, $tipoIdentificacionTrabajador, $numeroIdentificacionTrabajador, $emailTrabajador, $telefonoTrabajador, $sueldoTrabajador, 
+    $tipoSueldoTrabajador, $horarioTrabajador, $horasLaboradasTrabajador, $razonSocialEmpresa, $nombreComercialEmpresa, $nombrePatronEmpresa, 
+    $dedicaEmpresa, $curpRfcEmpresa, $calleEmpresa, $numeroExteriorEmpresa, $numeroIneriorEmpresa, $coloniaEmpresa, $cpEmpresa, $estadoEmpresa, 
+    $municipioEmpresa, $telefonoEmpresa, $emailEmpresa, $cuantificacionDoc, $fechaOper);
     
     return array(array($stmt->execute()), $stmt->insert_id);
 }
@@ -161,4 +189,10 @@ function datosRatificacion($dbConnect, $campo, $valor){
     return $fila;
 }
 
+function cambiarEstatusRatificacion($dbConnect, $ratificado, $idRatificacion){
+    $query = 'UPDATE ratificacion SET ratificado = ? WHERE idRatificacion = ?';
+    $stmt = $dbConnect->prepare($query);
+    $stmt->bind_param('ii', $ratificado, $idRatificacion);
+    return array($stmt->execute());
+}
 ?>

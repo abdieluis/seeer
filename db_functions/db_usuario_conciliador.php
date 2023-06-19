@@ -6,11 +6,11 @@ registrarUsuarioConciliador($dbConnect, $nombres, $apellidos, $ciudad)
 ************************************************************************************************************************
 */
 
-function registrarUsuarioConciliador($dbConnect, $nombres, $apellidos, $ciudad){
-    $query = 'INSERT INTO usuario_conciliador (nombres, apellidos, idCiudad)
-    VALUES (?,?,?)';
+function registrarUsuarioConciliador($dbConnect, $idUsuario, $nombres, $apellidos, $ciudad){
+    $query = 'INSERT INTO usuario_conciliador (idUsuarioConciliador, nombres, apellidos, idCiudad)
+    VALUES (?,?,?,?)';
     $stmt = $dbConnect->prepare($query);
-    $stmt->bind_param('ssi', $nombres, $apellidos, $ciudad);
+    $stmt->bind_param('issi', $idUsuario, $nombres, $apellidos, $ciudad);
     
     return array(array($stmt->execute()), $stmt->insert_id);
 }

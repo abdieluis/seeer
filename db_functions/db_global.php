@@ -4,12 +4,10 @@ function comenzarConexion(){
   ini_set('memory_limit', '1024M');
   date_default_timezone_set('America/Mexico_City');
 
-  $settings = parse_ini_file("../settings.ini");
-
-  $DBName   = $settings['DBName'];
-  $DBServer =  $settings['DBServer'];
-  $DBUser   =  $settings['DBUser'];
-  $DBPass   =  $settings['DBPass'];
+  $DBName   = "seer";
+  $DBServer = "localhost";
+  $DBUser   = "root";
+  $DBPass   = "";
 
 
   $dbConnect = new mysqli($DBServer, $DBUser, $DBPass, $DBName);

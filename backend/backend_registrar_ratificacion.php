@@ -31,7 +31,6 @@ $puestoDesempeñadoTrabajador    = ucwords($_POST['puestoDesempeñadoTrabajador'
 $calleTrabajador                = ucwords($_POST['calleTrabajador']);
 $numeroExteriorTrabajador       = $_POST['numeroExteriorTrabajador'];
 $numeroInteriorTrabajador       = $_POST['numeroInteriorTrabajador'];
-
 $coloniaTrabajador              = ucwords($_POST['coloniaTrabajador']);
 $codigoPostalTrabajador         = $_POST['codigoPostalTrabajador'];
 $estadoTrabajador               = $_POST['estadoTrabajador'];
@@ -42,7 +41,6 @@ $nssTrabajador                  = strtoupper($_POST['nssTrabajador']);
 $tipoIdentificacionTrabajador   = $_POST['tipoIdentificacionTrabajador'];
 $numeroIdentificacionTrabajador = strtoupper($_POST['numeroIdentificacionTrabajador']);
 $emailTrabajador                = strtolower($_POST['emailTrabajador']);
-
 $telefonoTrabajador             = $_POST['telefonoTrabajador'];
 $sueldoTrabajador               = $_POST['sueldoTrabajador'];
 $tipoSueldoTrabajador           = $_POST['tipoSueldoTrabajador'];
@@ -53,7 +51,6 @@ $nombreComercialEmpresa         = ucwords($_POST['nombreComercialEmpresa']);
 $nombrePatronEmpresa            = ucwords($_POST['nombrePatronEmpresa']);
 $dedicaEmpresa                  = ucwords($_POST['dedicaEmpresa']);
 $curpRfcEmpresa                 = strtoupper($_POST['curpRfcEmpresa']);
-
 $calleEmpresa                   = ucwords($_POST['calleEmpresa']);
 $numeroExteriorEmpresa          = $_POST['numeroExteriorEmpresa'];
 $numeroIneriorEmpresa           = $_POST['numeroIneriorEmpresa'];
@@ -63,52 +60,53 @@ $estadoEmpresa                  = $_POST['estadoEmpresa'];
 $municipioEmpresa               = $_POST['municipioEmpresa'];
 $telefonoEmpresa                = $_POST['telefonoEmpresa'];
 $emailEmpresa                   = strtolower($_POST['emailEmpresa']);
-
 $idCiudad                       = $_POST['ciudadRatificacion'];
 
-// $idCiudad                       = 1;
-$idTipoUsuario                  = 3;
+// $idTipoUsuario                  = 3;
 
-$tamanio       = 200;
+$tamanio       = 300;
 $ruta          = '../documento_cuantificacion/';
 
 $extensionesValidas = array("pdf");
 
+// print_r($_FILES);
+
 
 if((isset($_FILES["cuantificacion"]))){
+    // print_r("entro");
     if (($_FILES['cuantificacion']['size']) < ($tamanio * 1024)) {
 
-        // if (isset($razonSocialEmpresa)) {
-        //     $cuantificacionDoc = $razonSocialEmpresa."_"."Cuantificacion";
-        //     $resultado    = subirArchivo($extensionesValidas, $_FILES["cuantificacion"], $cuantificacionDoc, $ruta);
-        //     $cuantificacionDoc = $razonSocialEmpresa."_"."Cuantificacion.pdf";
-        // }
+        //ASIGNARLE EL NOMBRE COMERCIAL DE LA EMPRESA AL DOCUMENTO
         if (isset($nombreComercialEmpresa)) {
             $cuantificacionDoc = $nombreComercialEmpresa."_"."Cuantificacion";
             $resultado    = subirArchivo($extensionesValidas, $_FILES["cuantificacion"], $cuantificacionDoc, $ruta);
             $cuantificacionDoc = $nombreComercialEmpresa."_"."Cuantificacion.pdf";
         }
-        // elseif (isset($nombrePatronEmpresa)) {
-        //     $cuantificacionDoc = $nombrePatronEmpresa."_"."Cuantificacion";
-        //     $resultado    = subirArchivo($extensionesValidas, $_FILES["cuantificacion"], $cuantificacionDoc, $ruta);
-        //     $cuantificacionDoc = $nombrePatronEmpresa."_"."Cuantificacion.pdf";
-        // }
-        // elseif (isset($razonSocialEmpresa) && ($nombreComercialEmpresa) &&($nombrePatronEmpresa)) {
-        //     $cuantificacionDoc = $nombreComercialEmpresa."_"."Cuantificacion";
-        //     $resultado    = subirArchivo($extensionesValidas, $_FILES["cuantificacion"], $cuantificacionDoc, $ruta);
-        //     $cuantificacionDoc = $nombreComercialEmpresa."_"."Cuantificacion.pdf";
-        // }
 
         // SE REGISTRA LA RATIFICACION A RECEPCIÓN
+        // print_r("entro");
 
-        $resultadoSolicitudes  = registrarRatificacion($dbConnect, $fechaInicioLaboralTrabajador, $fechaFinLaboralTrabajador, $nombresTrabajador, $apellidosTrabajador, $generoTrabajador, 
-        $edadTrabajador, $puestoDesempeñadoTrabajador, $calleTrabajador, $numeroExteriorTrabajador, $numeroInteriorTrabajador, $coloniaTrabajador, $codigoPostalTrabajador, $estadoTrabajador, 
-        $municipioTrabajador, $curpTrabajador, $rfcTrabajador, $nssTrabajador, $tipoIdentificacionTrabajador, $numeroIdentificacionTrabajador, $emailTrabajador, $telefonoTrabajador, 
-        $sueldoTrabajador, $tipoSueldoTrabajador, $horarioTrabajador, $horasLaboradasTrabajador, $razonSocialEmpresa, $nombreComercialEmpresa, $nombrePatronEmpresa, $dedicaEmpresa, 
-        $curpRfcEmpresa, $calleEmpresa, $numeroExteriorEmpresa, $numeroIneriorEmpresa, $coloniaEmpresa, $cpEmpresa, $estadoEmpresa, $municipioEmpresa, $telefonoEmpresa, $emailEmpresa, 
-        $cuantificacionDoc, $fechaOper);
+        $resultadoRatificacion  = registrarRatificacion($dbConnect, $fechaInicioLaboralTrabajador, $fechaFinLaboralTrabajador, $nombresTrabajador, 
+        $apellidosTrabajador, $generoTrabajador, $edadTrabajador, $puestoDesempeñadoTrabajador, $calleTrabajador, $numeroExteriorTrabajador, 
+        $numeroInteriorTrabajador, $coloniaTrabajador, $codigoPostalTrabajador, $estadoTrabajador, $municipioTrabajador, $curpTrabajador, $rfcTrabajador, 
+        $nssTrabajador, $tipoIdentificacionTrabajador, $numeroIdentificacionTrabajador, $emailTrabajador, $telefonoTrabajador, $sueldoTrabajador, 
+        $tipoSueldoTrabajador, $horarioTrabajador, $horasLaboradasTrabajador, $razonSocialEmpresa, $nombreComercialEmpresa, $nombrePatronEmpresa, $dedicaEmpresa, 
+        $curpRfcEmpresa, $calleEmpresa, $numeroExteriorEmpresa, $numeroIneriorEmpresa, $coloniaEmpresa, $cpEmpresa, $estadoEmpresa, $municipioEmpresa, 
+        $telefonoEmpresa, $emailEmpresa, $cuantificacionDoc, $fechaOper);
 
-        $arrayResultados            = unirArrays($arrayResultados, $resultadoSolicitudes);
+        $arrayResultados            = unirArrays($arrayResultados, $resultadoRatificacion);
+
+        if(!isset($backendIncluido)){
+            $ejecutarDb = true;
+            $respuesta  = committedRolledbackDb($dbConnect, $arrayResultados, $ejecutarDb, $objetoRespuesta, $mensaje);
+            $codigo     = "exito";
+            $mensaje    = "Registro exitoso";
+            $objetoRespuesta = array();
+        }else {
+            $codigo   = "fallo";
+            $mensaje  = "Error no se pudo registrar la ratificación";
+            $objetoRespuesta = array();
+        }
 
         // // SE REGISTRA LA RATIFICACION PARA ASIGNARSELA DESPUES A UN AUXILIAR
 
@@ -200,17 +198,7 @@ else{
 }
 
 // =================================================================================
-if(!isset($backendIncluido)){
-    $ejecutarDb = true;
-    $respuesta  = committedRolledbackDb($dbConnect, $arrayResultados, $ejecutarDb, $objetoRespuesta, $mensaje);
-    $codigo     = "exito";
-    $mensaje    = "Registro exitoso";
-    $objetoRespuesta = array();
-}else {
-    $codigo   = "fallo";
-    $mensaje  = "Error no se pudo registrar la ratificación";
-    $objetoRespuesta = array();
-}
+
 
 //***********************************************************************************************
 if(!isset($backendIncluido))
