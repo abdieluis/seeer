@@ -72,6 +72,19 @@ function abrirPopupAltaUsuarios(){
 }
 // ============================================================================
 
+// FUNCION LIMPIAR FORMULARIO =================================================
+function limpiarCampos(){
+    $("#nombresUsuarioAlta").val("");
+    $("#apellidosUsuarioAlta").val("");
+    $("#usuarioAlta").val("");
+    $("#contrasenaUsuarioAlta").val("");
+    $("#tipoUsuarioAlta").val("-1");
+    $("#ciudadUsuarioAlta").val("-1");
+    $("#usuarioConciliadorAlta").val("-1");
+
+}
+// ============================================================================
+
 // FUNCION OULTAR Y MOSTRAR CONTRASEÑA ========================================
 function ocultarMostrarContrasena(){
     var cambio = document.getElementById("contrasenaUsuarioAlta");
@@ -159,12 +172,12 @@ function mostrarConciliador(e){
                 if(respuesta["codigo"] == "fallo"){
                     $(".iconoMensaje").html("<i class='bx bx-x-circle bx-tada bx-lg' style='color:#f90707'></i>");
                     $(".textoMensaje").text(respuesta["mensaje"]);
-                    $("#msj").modal("toggle");
+                    $("#msjRec").modal("toggle");
+                    $(".btnCancelarUsuario").click();
                     closeMessageOverlay();
                 }
                 else if(respuesta["codigo"] == "exito"){
                     var resultados = respuesta["objetoRespuesta"]["usuarioConciliador"];
-                    console.log(resultados);
 
                     var opcionesUsuariosCpnciliador = "<option value='-1'>Selecciona El Conciliador del Auxiliar</option>";
 

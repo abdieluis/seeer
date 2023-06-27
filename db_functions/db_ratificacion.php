@@ -58,24 +58,6 @@ $municipioEmpresa, $telefonoEmpresa, $emailEmpresa, $cuantificacionDoc, $fechaOp
     return array(array($stmt->execute()), $stmt->insert_id);
 }
 
-function mostrarRatificaciones($dbConnect){
-    $respuesta = array();
-    $query = 'SELECT aura.idUsuario, aura.idRatificacion, aura.ciudad 
-    FROM auxiliar_ratificacion aura 
-    INNER JOIN usuario_categoria usca 
-    WHERE usca.idTipoUsuario = 3 
-    AND aura.eliminado = 0;';
-    $stmt = $dbConnect->prepare($query);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
-
-    while ($fila = $resultado->fetch_assoc()) {
-        array_push($respuesta, $fila);
-    }
-
-    return $respuesta;
-}
-
 function obtenerLaUltimaRatificacionCreada($dbConnect){
     $fila = array();
     $query = 'SELECT * FROM ratificacion WHERE fechaCreacion >= CURDATE() ORDER BY idRatificacion DESC LIMIT 1';

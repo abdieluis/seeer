@@ -35,12 +35,12 @@ $idUsuario   = $_SESSION['idUsuario'];
                                         <td class="resultados">'.$datos[$i]["nombrePatron"].'</td>
 										<td class="resultados">'.$datos[$i]["nombreComercial"].'</td>';
                                         if($datos[$i]["ratificado"] == 0){
-                                            echo'<td class="resultados"><i class="bx bx-history" style="color:#fb0202"></i>  Por Ratificar</td>';
+                                            echo'<td class="resultados"><i class="bx bx-history" style="color:#fb0202"></i>  Pendiente</td>';
                                             echo'<td class="resultados"> <div class="operacionesTd"> <a class="opcTd" href="#" onclick="visualizarRatificacion('.$datos[$i]["idRatificacion"].')"><i class="bx bx-show-alt"></i></a></div></td>
                                             </tr>'; 
                                         }
                                         elseif($datos[$i]["ratificado"] == 1) {
-                                            echo'<td class="resultados"><i class="bx bx-check-circle" style="color:#3B9500"></i>  Ratificado</td>';
+                                            echo'<td class="resultados"><i class="bx bx-mail-send" style="color:#3B9500"></i> Correo enviado</td>';
                                             echo'<td class="resultados"> <div class="operacionesTd"> <a class="opcTd" href="#" onclick="mensajeRatificado()"><i class="bx bx-low-vision"></i></a></div></td>
                                             </tr>'; 
                                         }
@@ -53,8 +53,24 @@ $idUsuario   = $_SESSION['idUsuario'];
 					</table>
 				</div>
 			</div>
-            <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded visualizarRatificacion"></div>
+            <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded visualizarRatificacion" id="myForm"></div>
+            <!-- <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded visualizarRatificacion"></div> -->
 <script>
+
+function ocultarFormulario() {
+
+    var form = $("#myForm");
+
+    if (form.is(":visible")) {
+        // Si el formulario está visible, ocultarlo con una animación
+        form.fadeOut();
+    } 
+    // else {
+    //     // Si el formulario está oculto, mostrarlo con una animación
+    //     form.fadeIn();
+    // }
+}
+
 // FUNCION PARA MANDAR MENSAJE DE QUE YA ESTA ========================================================
 function mensajeRatificado(){
     $(".iconoMensaje").html("<i class='bx bx-check-circle bx-tada bx-lg' style='color:#0ea202' ></i>");
@@ -64,6 +80,10 @@ function mensajeRatificado(){
 // ===================================================================================================
 // FUNCION VISUALIZAR RATIFICACION ===================================================================
 function visualizarRatificacion(idRatificacion) {
+
+    var form = $("#myForm");
+    form.fadeIn();
+
     idRatificacionSeleccionada = idRatificacion;
 
     var jsonData = {
@@ -502,6 +522,15 @@ function visualizarRatificacion(idRatificacion) {
                                 "</div>"+
                             "</div>"+
                         "</div>"+
+
+                        "<div class='row g-3'>"+
+                            "<div class='col-sm-12'>"+
+                                "<div class='input-group mb-3 btnArchivo'>"+
+                                "<button class='round-button' onclick='ocultarFormulario();'><i class='bx bxs-chevron-up bx-sm'></i></button>"+
+                                "</div>"+
+                            "</div>"+
+                        "</div>"+
+                        
                     "</div>"+
                 "</div>";
 

@@ -17,13 +17,13 @@ $mail = new PHPMailer(true);
 try {
 
     // DATOS POR POST
-    // $correoEmpleado = $_POST['correoEmpleado'];
-    // $correoPatron   = $_POST['correoPatron'];
+    $correoEmpleado = $_POST['correoEmpleado'];
+    $correoPatron   = $_POST['correoPatron'];
     $fecha          = $_POST['fecha'];
     $hora           = $_POST['hora'];
 
     // $correoEmpleado = 
-    $correoPatron   = 'luisabdiel.gv@gmail.com';
+    // $correoPatron   = 'luisabdiel.gv@gmail.com';
     // $fecha          = '12-06-2023';
     // $hora           = '12:22 pm';
 
@@ -52,7 +52,7 @@ try {
 
     //Recipients
     $mail->setFrom('ratificaciones@cclmichoacan.gob.mx', 'CCL');
-    // $mail->addAddress($correoEmpleado);
+    $mail->addAddress($correoEmpleado);
     $mail->addAddress($correoPatron);     //Add a recipient
     // $mail->addAddress('ellen@example.com');               //Name is optional
     // $mail->addReplyTo('info@example.com', 'Information');
@@ -138,7 +138,7 @@ try {
             <p>¡Hola!</p>
             <p>Tu proxima ratificación se celebrará el dia '.$fecha.' a las '.$hora.' en donde se te pide de favor que llegues 15 minutos antes.</p>
             <p>Descarga el documento en el siguiente botón e imprimelo.</p>
-            <center><a href="http://localhost/seeer/pdf_correo/correo_ratificacion.php" target="_blank" rel="noopener noreferrer">Descargar</a></center>
+            <center><a href="http://seeerconciliador.cclmichoacan.gob.mx/pdf_correo/correo_ratificacion.php" target="_blank" rel="noopener noreferrer">Descargar</a></center>
             <br><br>
             <div class="footer">
                 <p>cclmichoacán | Todos los derechos reservados</p>

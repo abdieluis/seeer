@@ -185,7 +185,7 @@ function obtenerUsuariosSinRatificacion($dbConnect, $idCiudad, $idTipoUsuario){
 
 function obtenerUltimoUsuarioCredo($dbConnect){
     $fila = array();
-    $query = 'SELECT * FROM usuarios ORDER BY fechaAlta DESC LIMIT 1';
+    $query = 'SELECT MAX(idUsuario) AS ultimo_id FROM usuarios WHERE fechaAlta = CURDATE()';
     $stmt = $dbConnect->prepare($query);
     $stmt->execute();
     $resultado = $stmt->get_result();

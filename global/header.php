@@ -53,6 +53,9 @@ require_once("../popups/popup_cerrar_sesion.php");
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
   <!-- <script src="assets/dist/js/bootstrap.bundle.min.js"></script> -->
     <style>
       .bd-placeholder-img {
